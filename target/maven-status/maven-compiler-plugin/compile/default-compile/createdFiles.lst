@@ -1,2 +1,15 @@
-io\admin\TimeclockApplication.class
-io\admin\TimeclockConfiguration.class
+<<<<<<< HEAD
+=======
+io/admin/timesheet/TimeclockServiceGrpc$3.class
+io/admin/timesheet/TimeclockServiceGrpc$TimeclockServiceBaseDescriptorSupplier.class
+io/admin/timesheet/TimeclockServiceGrpc$TimeclockServiceImplBase.class
+io/admin/timesheet/TimeclockServiceGrpc.class
+io/admin/timesheet/TimeclockServiceGrpc$TimeclockServiceFileDescriptorSupplier.class
+io/admin/timesheet/TimeclockServiceGrpc$TimeclockServiceStub.class
+io/admin/timesheet/TimeclockServiceGrpc$TimeclockServiceBlockingStub.class
+io/admin/timesheet/TimeclockServiceGrpc$TimeclockServiceFutureStub.class
+io/admin/timesheet/TimeclockServiceGrpc$MethodHandlers.class
+io/admin/timesheet/TimeclockServiceGrpc$TimeclockServiceMethodDescriptorSupplier.class
+io/admin/timesheet/TimeclockServiceGrpc$1.class
+io/admin/timesheet/TimeclockServiceGrpc$2.class
+>>>>>>> 3fe031d (Implement proto definition)

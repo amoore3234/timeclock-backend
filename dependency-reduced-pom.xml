@@ -118,9 +118,13 @@
       <id>java11+</id>
       <properties>
         <os.detected.arch>x86_64</os.detected.arch>
-        <os.detected.name>windows</os.detected.name>
-        <os.detected.classifier>windows-x86_64</os.detected.classifier>
+        <os.detected.release.version>22.04</os.detected.release.version>
+        <os.detected.release.like.debian>true</os.detected.release.like.debian>
+        <os.detected.name>linux</os.detected.name>
+        <os.detected.release.like.ubuntu>true</os.detected.release.like.ubuntu>
+        <os.detected.classifier>linux-x86_64</os.detected.classifier>
         <maven.javadoc.skip>true</maven.javadoc.skip>
+        <os.detected.release>ubuntu</os.detected.release>
       </properties>
     </profile>
   </profiles>
@@ -154,7 +158,10 @@
   <properties>
     <dropwizard.version>4.0.0-beta.3</dropwizard.version>
     <mainClass>io.admin.TimeclockApplication</mainClass>
+    <protobuf.version>3.21.12</protobuf.version>
+    <protoc.version>3.21.12</protoc.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <grpc.version>1.52.1</grpc.version>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
   </properties>
 </project>
