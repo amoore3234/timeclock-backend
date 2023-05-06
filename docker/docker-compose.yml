@@ -1,0 +1,29 @@
+version: '3.4'
+services:
+  liquibase:
+    depends_on:
+      - timeclock-database
+    image: liquibase/liquibase
+    volumes:
+      - ./liquibase-docker/:/liquibase/lib/
+    command:
+      - liquibase
+      - --url=jdbc:postgresql://timeclock-database/timeclock
+      - --username=timeclockuser
+      - --password=postgres
+      - --changeLogFile=./changelog.xml
+      - update
+
+  timeclock-database:
+    image: postgres:14
+    container_name: timeclock-database
+    env_file: env/postgres.env
+    ports:
+      - '5433:5433'
+    volumes:
+      - timeclock-postgres-data:/var/lib/postgresql/data
+    restart: always
+
+volumes:
+  timeclock-postgres-data:
+    driver: local
