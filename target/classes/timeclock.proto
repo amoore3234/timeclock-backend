@@ -112,7 +112,7 @@ message Timesheet {
   google.protobuf.Timestamp clockIn = 3;
   google.protobuf.Timestamp clockOut = 4;
   google.protobuf.Timestamp lunch = 5;
-  int32 totalHoursWorked = 6;
+  int32 hoursWorked = 6;
   int32 overtime = 7;
 }
 
@@ -121,7 +121,7 @@ message TimesheetInput {
   google.protobuf.Timestamp clockIn = 3;
   google.protobuf.Timestamp clockOut = 4;
   google.protobuf.Timestamp lunch = 5;
-  int32 totalHoursWorked = 6;
+  int32 hoursWorked = 6;
   int32 overtime = 7;
 }
 
@@ -137,12 +137,15 @@ message EmployeeTimesheet {
   int64 id = 1;
   EmployeeDetail employeeDetailId = 2;
   Timesheet timesheetId = 3;
-  google.protobuf.Timestamp date = 4;
+  google.protobuf.Timestamp weeklyPeriodDate = 4;
+  int32 weeklyHoursWorked = 5;
 }
 
 message EmployeeTimesheetInput {
   EmployeeDetail employeeDetailId = 1;
   Timesheet timesheetId = 2;
+  google.protobuf.Timestamp weeklyPeriodDate = 3;
+  int32 weeklyHoursWorked = 4;
 }
 
 message GetEmployeeTimesheetById {
