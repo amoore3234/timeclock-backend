@@ -1,17 +1,19 @@
 package io.admin.core;
 
-import java.time.OffsetDateTime;
-import java.util.List;
-import java.util.Objects;
-
 import jakarta.annotation.Nullable;
 import jakarta.persistence.Column;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import java.time.OffsetDateTime;
+import java.util.List;
+import java.util.Objects;
 
+/**
+ * Entity for Timesheet class.
+ */
 public class TimesheetEntity extends AbstractEntity {
-  
+
   @Nullable
   @ManyToOne
   @JoinColumn(name = "holiday_id", referencedColumnName = "id")

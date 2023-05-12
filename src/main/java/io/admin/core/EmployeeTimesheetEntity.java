@@ -1,15 +1,17 @@
 package io.admin.core;
 
-import java.time.OffsetDateTime;
-import java.util.Objects;
-
 import jakarta.annotation.Nullable;
 import jakarta.persistence.Column;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import java.time.OffsetDateTime;
+import java.util.Objects;
 
+/**
+ * Enity class for EmployeeTimesheet class.
+ */
 public class EmployeeTimesheetEntity extends AbstractEntity {
-  
+
   @Nullable
   @ManyToOne
   @JoinColumn(name = "employee_detail_id", referencedColumnName = "id")

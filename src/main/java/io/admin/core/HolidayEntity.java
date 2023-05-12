@@ -1,15 +1,17 @@
 package io.admin.core;
 
+import jakarta.annotation.Nullable;
+import jakarta.persistence.Column;
+import jakarta.persistence.OneToMany;
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Objects;
 
-import jakarta.annotation.Nullable;
-import jakarta.persistence.Column;
-import jakarta.persistence.OneToMany;
-
+/**
+ * Entity for Holiday class.
+ */
 public class HolidayEntity extends AbstractEntity {
-  
+
   @Nullable
   @Column(name = "holiday_name")
   private String holidayName;
@@ -61,9 +63,9 @@ public class HolidayEntity extends AbstractEntity {
     }
     HolidayEntity other = (HolidayEntity) obj;
     return getId() == other.getId()
-    && Objects.equals(holidayName, other.holidayName)
-    && Objects.equals(date, other.date)
-    && Objects.equals(timesheets, other.timesheets);
+      && Objects.equals(holidayName, other.holidayName)
+      && Objects.equals(date, other.date)
+      && Objects.equals(timesheets, other.timesheets);
   }
 
   public static HolidayEntity newInstance() {

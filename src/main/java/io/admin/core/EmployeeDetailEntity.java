@@ -1,9 +1,5 @@
 package io.admin.core;
 
-import java.time.OffsetDateTime;
-import java.util.List;
-import java.util.Objects;
-
 import jakarta.annotation.Nullable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -11,16 +7,22 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.time.OffsetDateTime;
+import java.util.List;
+import java.util.Objects;
 
+/**
+ * Entity for EmployeeDetail class.
+ */
 @Entity
 @Table(name = "employee_detail")
 public class EmployeeDetailEntity extends AbstractEntity {
-  
+
   @Nullable
   @ManyToOne()
   @JoinColumn(name = "user_id", referencedColumnName = "id")
   private UserEntity user;
-  
+
   @Nullable
   @Column(name = "first_name")
   private String firstName;
@@ -171,5 +173,5 @@ public class EmployeeDetailEntity extends AbstractEntity {
   public static EmployeeDetailEntity newInstance() {
     return new EmployeeDetailEntity();
   }
-  
+
 }

@@ -1,19 +1,21 @@
 package io.admin.core;
 
-import java.time.OffsetDateTime;
-import java.util.Objects;
-
 import jakarta.annotation.Nullable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.time.OffsetDateTime;
+import java.util.Objects;
 
+/**
+ * Entity for Project class.
+ */
 @Entity
 @Table(name = "project")
 public class ProjectEntity extends AbstractEntity {
-  
+
   @Nullable
   @OneToMany
   @JoinColumn(name = "employee_detail_id", referencedColumnName = "id")
