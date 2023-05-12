@@ -6,8 +6,7 @@ import org.hibernate.SessionFactory;
 /**
  * Initializes a session factory for the UserEntity repository class.
  */
-public class UserLoginEntityRepository extends AbstractRepository<UserLoginEntity>
-    implements UserLoginRepository {
+public class UserLoginEntityRepository extends AbstractRepository<UserLoginEntity> {
 
   protected UserLoginEntityRepository(SessionFactory sessionFactory) {
     super(sessionFactory);
