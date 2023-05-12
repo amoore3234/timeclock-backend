@@ -10,7 +10,7 @@ import java.time.OffsetDateTime;
 import java.util.Objects;
 
 /**
- * Entity for Project class.
+ * Project class modeled as an entity.
  */
 @Entity
 @Table(name = "project")

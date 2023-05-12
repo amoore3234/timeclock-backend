@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Entity for Timesheet class.
+ * Timesheet class modeled as an entity.
  */
 public class TimesheetEntity extends AbstractEntity {
 

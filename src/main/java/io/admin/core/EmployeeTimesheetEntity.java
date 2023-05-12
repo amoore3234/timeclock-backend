@@ -8,7 +8,7 @@ import java.time.OffsetDateTime;
 import java.util.Objects;
 
 /**
- * Enity class for EmployeeTimesheet class.
+ * EmployeeTimesheet class modeled as an entity..
  */
 public class EmployeeTimesheetEntity extends AbstractEntity {
 

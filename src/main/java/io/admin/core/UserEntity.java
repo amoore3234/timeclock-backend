@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Entity for User class.
+ * User class modeled as an entity.
  */
 @Entity
 @Table(name = "user")

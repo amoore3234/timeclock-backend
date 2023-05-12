@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Entity for EmployeeDetail class.
+ * EmployeeDetail class modeled as an entity.
  */
 @Entity
 @Table(name = "employee_detail")

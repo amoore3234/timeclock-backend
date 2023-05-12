@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Entity for Holiday class.
+ * Holiday class modeled as an entity.
  */
 public class HolidayEntity extends AbstractEntity {
 
