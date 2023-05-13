@@ -2,14 +2,18 @@ package io.admin.core;
 
 import jakarta.annotation.Nullable;
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import java.time.OffsetDateTime;
 import java.util.Objects;
 
 /**
  * EmployeeTimesheet class modeled as an entity..
  */
+@Entity
+@Table(name = "employee_timesheet")
 public class EmployeeTimesheetEntity extends AbstractEntity {
 
   @Nullable
@@ -19,7 +23,7 @@ public class EmployeeTimesheetEntity extends AbstractEntity {
 
   @Nullable
   @ManyToOne
-  @JoinColumn(name = "timesheet_id")
+  @JoinColumn(name = "timesheet_id", referencedColumnName = "id")
   private TimesheetEntity timesheet;
 
   @Nullable

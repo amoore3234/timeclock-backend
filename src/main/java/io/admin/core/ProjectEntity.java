@@ -4,7 +4,7 @@ import jakarta.annotation.Nullable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.time.OffsetDateTime;
 import java.util.Objects;
@@ -17,7 +17,7 @@ import java.util.Objects;
 public class ProjectEntity extends AbstractEntity {
 
   @Nullable
-  @OneToMany
+  @ManyToOne
   @JoinColumn(name = "employee_detail_id", referencedColumnName = "id")
   private EmployeeDetailEntity employeeDetail;
 

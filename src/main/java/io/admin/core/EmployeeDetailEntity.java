@@ -19,9 +19,9 @@ import java.util.Objects;
 public class EmployeeDetailEntity extends AbstractEntity {
 
   @Nullable
-  @ManyToOne()
-  @JoinColumn(name = "user_id", referencedColumnName = "id")
-  private UserEntity user;
+  @ManyToOne
+  @JoinColumn(name = "user_login_id", referencedColumnName = "id")
+  private UserLoginEntity userLogin;
 
   @Nullable
   @Column(name = "first_name")
@@ -62,12 +62,12 @@ public class EmployeeDetailEntity extends AbstractEntity {
   protected EmployeeDetailEntity() {}
 
   @Nullable
-  public UserEntity getUser() {
-    return user;
+  public UserLoginEntity getUserLogin() {
+    return userLogin;
   }
 
-  public void setUser(@Nullable UserEntity user) {
-    this.user = user;
+  public void setUserLogin(@Nullable UserLoginEntity userLogin) {
+    this.userLogin = userLogin;
   }
 
   @Nullable
@@ -159,7 +159,8 @@ public class EmployeeDetailEntity extends AbstractEntity {
       return false;
     }
     EmployeeDetailEntity other = (EmployeeDetailEntity) obj;
-    return getId() == other.getId() && Objects.equals(firstName, other.firstName)
+    return getId() == other.getId() && Objects.equals(userLogin, other.userLogin)
+      && Objects.equals(firstName, other.firstName)
       && Objects.equals(lastName, other.lastName)
       && Objects.equals(employeeStatus, other.employeeStatus)
       && Objects.equals(employeeType, other.employeeStatus)

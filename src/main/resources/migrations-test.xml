@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext
+    http://www.liquibase.org/xml/ns/pro
+    http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.1.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+   <changeSet author="amoore" id="load_test_data">
+     <loadData file="test_user_login.csv" tableName="user_login" />
+     <loadData file="test_employee_detail.csv" tableName="employee_detail" />
+     <loadData file="test_employee_timesheet.csv" tableName="employee_timesheet" />
+     <loadData file="test_holiday.csv" tableName="holiday" />
+     <loadData file="test_project.csv" tableName="project" />
+     <loadData file="test_timesheet.csv" tableName="timesheet" />
+   </changeSet>
+</databaseChangeLog>

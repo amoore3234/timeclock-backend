@@ -2,7 +2,9 @@ package io.admin.core;
 
 import jakarta.annotation.Nullable;
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Objects;
@@ -10,6 +12,8 @@ import java.util.Objects;
 /**
  * Holiday class modeled as an entity.
  */
+@Entity
+@Table(name = "holiday")
 public class HolidayEntity extends AbstractEntity {
 
   @Nullable

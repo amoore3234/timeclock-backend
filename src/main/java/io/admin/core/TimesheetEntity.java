@@ -2,9 +2,11 @@ package io.admin.core;
 
 import jakarta.annotation.Nullable;
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Objects;
@@ -12,6 +14,8 @@ import java.util.Objects;
 /**
  * Timesheet class modeled as an entity.
  */
+@Entity
+@Table(name = "timesheet")
 public class TimesheetEntity extends AbstractEntity {
 
   @Nullable

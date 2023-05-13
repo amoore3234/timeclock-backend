@@ -12,8 +12,8 @@ import java.util.Objects;
  * User class modeled as an entity.
  */
 @Entity
-@Table(name = "user")
-public class UserEntity extends AbstractEntity {
+@Table(name = "user_login")
+public class UserLoginEntity extends AbstractEntity {
 
   @Nullable
   @Column(name = "email")
@@ -24,10 +24,10 @@ public class UserEntity extends AbstractEntity {
   private String password;
 
   @Nullable
-  @OneToMany(mappedBy = "user")
+  @OneToMany(mappedBy = "userLogin")
   private List<EmployeeDetailEntity> employeeDetails;
 
-  protected UserEntity() {}
+  protected UserLoginEntity() {}
 
   @Nullable
   public String getEmail() {
@@ -61,17 +61,17 @@ public class UserEntity extends AbstractEntity {
     if (this == obj) {
       return true;
     }
-    if (!(obj instanceof UserEntity)) {
+    if (!(obj instanceof UserLoginEntity)) {
       return false;
     }
-    UserEntity other = (UserEntity) obj;
+    UserLoginEntity other = (UserLoginEntity) obj;
     return getId() == other.getId() && Objects.equals(email, other.email)
       && Objects.equals(password, other.password)
       && Objects.equals(employeeDetails, other.employeeDetails);
   }
 
-  public static UserEntity newInstance() {
-    return new UserEntity();
+  public static UserLoginEntity newInstance() {
+    return new UserLoginEntity();
   }
 
 }
