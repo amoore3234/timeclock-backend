@@ -47,12 +47,7 @@ public class RequestBuilderUtil {
     employeeDetail.setEmployeeStatus(request.getEmpStatus());
     employeeDetail.setEmployeeType(request.getEmpType());
     employeeDetail.setEmployeeGrade(request.getEmpGrade());
-<<<<<<< HEAD
-    employeeDetail.setStartDate(DateFormatter.format(request.getStartDate()));
-    employeeDetail.setEndDate(DateFormatter.format(request.getEndDate()));
-=======
     employeeDetail.setStartDate(Timestamp.valueOf(request.getStartDate()));
->>>>>>> 4e9091e (Implement employee detail service)
     return employeeDetail;
   }
 
@@ -75,13 +70,8 @@ public class RequestBuilderUtil {
    * Updates an existing entity class from a request.
    *
    * @param request {@link UpdateEmployeeDetail} defines a request stub.
-<<<<<<< HEAD
-   * @param updatedUser {@link EmployeeDetailEntity} defines an entity class.
-   * @return returns a UserLoginEntity object.
-=======
    * @param updatedEmployeeDetail {@link EmployeeDetailEntity} defines an entity class.
    * @return returns a EmployeeDetailEntity object.
->>>>>>> 4e9091e (Implement employee detail service)
    */
   public static EmployeeDetailEntity updateEmployeeDetailRequest(
         UpdateEmployeeDetail request, EmployeeDetailEntity updatedEmployeeDetail) {
@@ -91,14 +81,9 @@ public class RequestBuilderUtil {
     updatedEmployeeDetail.setEmployeeStatus(request.getRequest().getEmpStatus());
     updatedEmployeeDetail.setEmployeeType(request.getRequest().getEmpType());
     updatedEmployeeDetail.setEmployeeGrade(request.getRequest().getEmpGrade());
-<<<<<<< HEAD
-    updatedEmployeeDetail.setStartDate(DateFormatter.format(request.getRequest().getStartDate()));
-    updatedEmployeeDetail.setEndDate(DateFormatter.format(request.getRequest().getEndDate()));
-=======
     updatedEmployeeDetail.setStartDate(Timestamp.valueOf(request.getRequest().getStartDate()));
     updatedEmployeeDetail.setEndDate(request.getRequest().getEndDate().isEmpty() ? null
         : Timestamp.valueOf(request.getRequest().getEndDate()));
->>>>>>> 4e9091e (Implement employee detail service)
     return updatedEmployeeDetail;
   }
 
@@ -142,11 +127,7 @@ public class RequestBuilderUtil {
   }
 
   /**
-<<<<<<< HEAD
    * Creates a EmployeeDetail response.
-=======
-   * Creates a EmployeeDetailEntity response.
->>>>>>> 4e9091e (Implement employee detail service)
    *
    * @param employeeDetail {@link EmployeeDetailEntity} defines a EmployeeDetail entity.
    * @param responseObserver {@link EmployeeDetailResponse} defines a StreamObserver response stub.
@@ -155,11 +136,7 @@ public class RequestBuilderUtil {
   public static StreamObserver<EmployeeDetailResponse> employeeDetailResponse(
       EmployeeDetailEntity employeeDetail, StreamObserver<EmployeeDetailResponse>
       responseObserver) {
-<<<<<<< HEAD
-    io.admin.timesheet.EmployeeDetailResponse.Builder employeeResponseBuilder =
-=======
     io.admin.timesheet.EmployeeDetailResponse.Builder employeeDetailResponseBuilder =
->>>>>>> 4e9091e (Implement employee detail service)
         EmployeeDetailResponse.newBuilder()
         .setId(employeeDetail.getId())
         .setFirstName(employeeDetail.getFirstName())
@@ -167,14 +144,9 @@ public class RequestBuilderUtil {
         .setEmpStatus(employeeDetail.getEmployeeStatus())
         .setEmpType(employeeDetail.getEmployeeStatus())
         .setEmpGrade(employeeDetail.getEmployeeGrade())
-<<<<<<< HEAD
-        .setStartDate((DateFormatter.toProtoDate(employeeDetail.getStartDate())))
-        .setEndDate(DateFormatter.toProtoDate(employeeDetail.getEndDate()));
-=======
         .setStartDate(((employeeDetail.getStartDate()).toString()))
         .setEndDate(employeeDetail.getEndDate() == null
           ? employeeDetail.getStartDate().toString() : employeeDetail.getEndDate().toString());
->>>>>>> 4e9091e (Implement employee detail service)
     EmployeeDetailResponse employeeDetailResponse = employeeDetailResponseBuilder.build();
     responseObserver.onNext(employeeDetailResponse);
     responseObserver.onCompleted();
