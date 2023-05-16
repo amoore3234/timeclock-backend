@@ -22,11 +22,11 @@ public abstract class AbstractRepository<T> extends AbstractDAO<T> {
     return list(query(String.format("from %s", getEntityClass().getSimpleName())));
   }
 
-  public Optional<T> getById(long id) {
+  public Optional<T> getById(Long id) {
     return Optional.ofNullable(get(id));
   }
 
-  public void deleteById(long id) {
+  public void deleteById(Long id) {
     getById(id).ifPresent(this::delete);
   }
 

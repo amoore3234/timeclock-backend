@@ -1,62 +1,64 @@
 package io.admin;
 
-import io.admin.db.EmployeeDetailRepository;
-import io.admin.db.EmployeeTimesheetRepository;
-import io.admin.db.HolidayRepository;
-import io.admin.db.ProjectRepository;
-import io.admin.db.TimesheetRepository;
-import io.admin.db.UserLoginRepository;
+import io.admin.db.EmployeeDetailEntityRepository;
+import io.admin.db.EmployeeTimesheetEntityRepository;
+import io.admin.db.HolidayEntityRepository;
+import io.admin.db.ProjectEntityRepository;
+import io.admin.db.TimesheetEntityRepository;
+import io.admin.db.UserLoginEntityRepository;
 import jakarta.annotation.Nullable;
+//import java.lang.reflect.Field;
 
 /**
  * A class to acces repository methods.
  */
 public class DbBuilder {
 
-  private final EmployeeDetailRepository employeeDetailRepository;
-  private final EmployeeTimesheetRepository employeeTimesheetRepository;
-  private final HolidayRepository holidayRepository;
-  private final ProjectRepository projectRepository;
-  private final TimesheetRepository timesheetRepository;
-  private final UserLoginRepository userLoginRepository;
+  private final EmployeeDetailEntityRepository employeeDetailEntityRepository;
+  private final EmployeeTimesheetEntityRepository employeeTimesheetEntityRepository;
+  private final HolidayEntityRepository holidayEntityRepository;
+  private final ProjectEntityRepository projectEntityRepository;
+  private final TimesheetEntityRepository timesheetEntityRepository;
+  private final UserLoginEntityRepository userLoginEntityRepository;
 
   /**
   `* Constructor that initailizes the DbBuilder class.
    */
-  public DbBuilder(EmployeeDetailRepository employeeDetailRepository, EmployeeTimesheetRepository
-      employeeTimesheetRepository, HolidayRepository holidayRepository, ProjectRepository
-      projectRepository,
-      TimesheetRepository timesheetRepository, UserLoginRepository userLoginRepository) {
-    this.employeeDetailRepository = employeeDetailRepository;
-    this.employeeTimesheetRepository = employeeTimesheetRepository;
-    this.holidayRepository = holidayRepository;
-    this.projectRepository = projectRepository;
-    this.timesheetRepository = timesheetRepository;
-    this.userLoginRepository = userLoginRepository;
+  public DbBuilder(EmployeeDetailEntityRepository employeeDetailEntityRepository,
+      EmployeeTimesheetEntityRepository employeeTimesheetEntityRepository,
+      HolidayEntityRepository holidayEntityRepository, ProjectEntityRepository
+      projectEntityRepository, TimesheetEntityRepository timesheetEntityRepository,
+      UserLoginEntityRepository userLoginEntityRepository) {
+    this.employeeDetailEntityRepository = employeeDetailEntityRepository;
+    this.employeeTimesheetEntityRepository = employeeTimesheetEntityRepository;
+    this.holidayEntityRepository = holidayEntityRepository;
+    this.projectEntityRepository = projectEntityRepository;
+    this.timesheetEntityRepository = timesheetEntityRepository;
+    this.userLoginEntityRepository = userLoginEntityRepository;
   }
 
-  public EmployeeDetailRepository getEmployeeDetailRepository() {
-    return employeeDetailRepository;
+  public EmployeeDetailEntityRepository getEmployeeDetailEntityRepository() {
+    return employeeDetailEntityRepository;
   }
 
-  public EmployeeTimesheetRepository getEmployeeTimesheetRepository() {
-    return employeeTimesheetRepository;
+  public EmployeeTimesheetEntityRepository getEmployeeTimesheetEntityRepository() {
+    return employeeTimesheetEntityRepository;
   }
 
-  public HolidayRepository getHolidayRepository() {
-    return holidayRepository;
+  public HolidayEntityRepository getHolidayEntityRepository() {
+    return holidayEntityRepository;
   }
 
-  public ProjectRepository getProjectRepository() {
-    return projectRepository;
+  public ProjectEntityRepository getProjectEntityRepository() {
+    return projectEntityRepository;
   }
 
-  public TimesheetRepository getTimesheetRepository() {
-    return timesheetRepository;
+  public TimesheetEntityRepository getTimesheetEntityRepository() {
+    return timesheetEntityRepository;
   }
 
-  public UserLoginRepository getUserLoginRepository() {
-    return userLoginRepository;
+  public UserLoginEntityRepository getUserLoginEntityRepository() {
+    return userLoginEntityRepository;
   }
 
   public static Build newBuild() {
@@ -69,60 +71,79 @@ public class DbBuilder {
   public static class Build {
 
     @Nullable
-    private EmployeeDetailRepository employeeDetailRepository;
+    private EmployeeDetailEntityRepository employeeDetailEntityRepository;
 
     @Nullable
-    private EmployeeTimesheetRepository employeeTimesheetRepository;
+    private EmployeeTimesheetEntityRepository employeeTimesheetEntityRepository;
 
     @Nullable
-    private HolidayRepository holidayRepository;
+    private HolidayEntityRepository holidayEntityRepository;
 
     @Nullable
-    private ProjectRepository projectRepository;
+    private ProjectEntityRepository projectEntityRepository;
 
     @Nullable
-    private TimesheetRepository timesheetRepository;
+    private TimesheetEntityRepository timesheetEntityRepository;
 
     @Nullable
-    private UserLoginRepository userLoginRepository;
+    private UserLoginEntityRepository userLoginEntityRepository;
 
     private Build() {}
 
-    public Build setEmployeeDetailRepository(EmployeeDetailRepository employeeDetailRepository) {
-      this.employeeDetailRepository = employeeDetailRepository;
+    public Build setEmployeeDetailEntityRepository(
+        EmployeeDetailEntityRepository employeeDetailEntityRepository) {
+      this.employeeDetailEntityRepository = employeeDetailEntityRepository;
       return this;
     }
 
-    public Build setEmployeeTimesheetRepository(EmployeeTimesheetRepository
-        employeeTimesheetRepository) {
-      this.employeeTimesheetRepository = employeeTimesheetRepository;
+    public Build setEmployeeTimesheetEntityRepository(EmployeeTimesheetEntityRepository
+        employeeTimesheetEntityRepository) {
+      this.employeeTimesheetEntityRepository = employeeTimesheetEntityRepository;
       return this;
     }
 
-    public Build setHolidayRepository(HolidayRepository holidayRepository) {
-      this.holidayRepository = holidayRepository;
+    public Build setHolidayEntityRepository(HolidayEntityRepository holidayEntityRepository) {
+      this.holidayEntityRepository = holidayEntityRepository;
       return this;
     }
 
-    public Build setProjectRepository(ProjectRepository projectRepository) {
-      this.projectRepository = projectRepository;
+    public Build setProjectEntityRepository(ProjectEntityRepository projectEntityRepository) {
+      this.projectEntityRepository = projectEntityRepository;
       return this;
     }
 
-    public Build setTimesheetRepository(TimesheetRepository timesheetRepository) {
-      this.timesheetRepository = timesheetRepository;
+    public Build setTimesheetEntityRepository(TimesheetEntityRepository timesheetEntityRepository) {
+      this.timesheetEntityRepository = timesheetEntityRepository;
       return this;
     }
 
-    public Build setUserLoginRepository(UserLoginRepository userLoginRepository) {
-      this.userLoginRepository = userLoginRepository;
+    public Build setUserLoginEntityRepository(UserLoginEntityRepository userLoginEntityRepository) {
+      this.userLoginEntityRepository = userLoginEntityRepository;
       return this;
     }
 
+    /**
+     * A build method that builds repository classes.
+     *
+     * @return returns a new DbBuilder instance.
+     */
     public DbBuilder build() {
-      return new DbBuilder(employeeDetailRepository, employeeTimesheetRepository,
-      holidayRepository, projectRepository, timesheetRepository, userLoginRepository);
+      //   for (Field field : this.getClass().getDeclaredFields()) {
+      //     try {
+      //       requiredNonNull(field.get(this), field.getName() + " is requred");
+      //     } catch (IllegalAccessException e) {
+      //       throw new RuntimeException(e);
+      //   }
+      // }
+      return new DbBuilder(employeeDetailEntityRepository, employeeTimesheetEntityRepository,
+      holidayEntityRepository, projectEntityRepository, timesheetEntityRepository,
+      userLoginEntityRepository);
     }
 
+    // private void requiredNonNull(Object obj, String message) {
+    //   if (obj == null) {
+    //     throw new IllegalArgumentException(message);
+    //   }
+    // }
   }
 }
