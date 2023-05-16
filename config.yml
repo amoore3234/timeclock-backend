@@ -2,7 +2,7 @@ database:
   driverClass: org.postgresql.Driver
   user: timeclockuser
   password: postgres
-  url: jdbc:postgresql://localhost:5433/timeclock
+  url: jdbc:postgresql://localhost:5432/timeclock
 
   # any properties specific to your JDBC driver:
   properties:
@@ -30,7 +30,9 @@ database:
   # the minimum amount of time an connection must sit idle in the pool before it is eligible for eviction
   minIdleTime: 1 minute
 
-template: Hello %s%
+grpcPort:
+  port: 5001
+  shutdownDuration: 10 seconds
 
 server:
   enableThreadNameFilter: false
