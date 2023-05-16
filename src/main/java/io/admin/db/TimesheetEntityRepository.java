@@ -6,8 +6,7 @@ import org.hibernate.SessionFactory;
 /**
  * Initializes a session factory for the TimesheetEntity repository class.
  */
-public class TimesheetEntityRepository extends AbstractRepository<TimesheetEntity>
-    implements TimesheetRepository {
+public class TimesheetEntityRepository extends AbstractRepository<TimesheetEntity> {
 
   protected TimesheetEntityRepository(SessionFactory sessionFactory) {
     super(sessionFactory);

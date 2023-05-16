@@ -19,7 +19,7 @@ services:
     container_name: timeclock-database
     env_file: env/postgres.env
     ports:
-      - '5433:5433'
+      - '5432:5432'
     volumes:
       - timeclock-postgres-data:/var/lib/postgresql/data
     restart: always
