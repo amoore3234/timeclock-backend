@@ -6,7 +6,8 @@ import org.hibernate.SessionFactory;
 /**
  * Initializes a session factory for the Cart repository class.
  */
-public class ProjectEntityRepository extends AbstractRepository<ProjectEntity> {
+public class ProjectEntityRepository extends AbstractRepository<ProjectEntity>
+    implements ProjectRepository {
 
   protected ProjectEntityRepository(SessionFactory sessionFactory) {
     super(sessionFactory);

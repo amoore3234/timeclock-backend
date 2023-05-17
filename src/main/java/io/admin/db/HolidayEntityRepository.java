@@ -6,7 +6,8 @@ import org.hibernate.SessionFactory;
 /**
  * Initializes a session factory for the Holiday repository class.
  */
-public class HolidayEntityRepository extends AbstractRepository<HolidayEntity> {
+public class HolidayEntityRepository extends AbstractRepository<HolidayEntity>
+    implements HolidayRepository {
 
   protected HolidayEntityRepository(SessionFactory sessionFactory) {
     super(sessionFactory);
