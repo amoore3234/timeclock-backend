@@ -6,7 +6,9 @@ import io.admin.core.HolidayEntity;
 import io.admin.core.ProjectEntity;
 import io.admin.core.TimesheetEntity;
 import io.admin.core.UserLoginEntity;
+import io.admin.db.EmployeeDetailEntityRepository;
 import io.admin.db.UserLoginEntityRepository;
+import io.admin.service.EmployeeDetailServiceImpl;
 import io.admin.service.UserLoginServiceImpl;
 import io.dropwizard.core.Application;
 import io.dropwizard.core.setup.Bootstrap;
@@ -62,16 +64,23 @@ public class TimeclockApplication extends Application<TimeclockConfiguration> {
     final DbBuilder dbBuilder = DbBuilder.newBuild()
                     .setUserLoginEntityRepository(
                       new UserLoginEntityRepository(hibernateBundle.getSessionFactory()))
+                    .setEmployeeDetailEntityRepository(
+                      new EmployeeDetailEntityRepository(hibernateBundle.getSessionFactory()))
                     .build();
     logger.info("Creating service with UnitOfWorkAwareProxyFactory");
     final UserLoginServiceImpl service = new UnitOfWorkAwareProxyFactory(hibernateBundle)
         .create(UserLoginServiceImpl.class, new Class<?>[]{DbBuilder.class},
           new Object[]{dbBuilder});
+    final EmployeeDetailServiceImpl employeeDetailService =
+        new UnitOfWorkAwareProxyFactory(hibernateBundle)
+          .create(EmployeeDetailServiceImpl.class, new Class<?>[]{DbBuilder.class},
+            new Object[]{dbBuilder});
 
     logger.info("Create gRPC server");
     final Server server = configuration.getGrpcServerFactory()
                           .builder(environment)
                           .addService(service)
+                          .addService(employeeDetailService)
                           .build();
 
     try {

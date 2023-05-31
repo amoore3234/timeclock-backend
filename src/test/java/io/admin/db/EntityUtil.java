@@ -6,6 +6,7 @@ import io.admin.core.HolidayEntity;
 import io.admin.core.ProjectEntity;
 import io.admin.core.TimesheetEntity;
 import io.admin.core.UserLoginEntity;
+import java.sql.Timestamp;
 import java.time.OffsetDateTime;
 import org.hibernate.SessionFactory;
 
@@ -28,7 +29,7 @@ class EntityUtil {
     final EmployeeDetailEntityRepository employeeDetailRepository =
         new EmployeeDetailEntityRepository(sessionFactory);
 
-    final OffsetDateTime now = OffsetDateTime.now();
+    final Timestamp timestamp = Timestamp.valueOf("2018-09-01 09:01:15");
     final EmployeeDetailEntity employeeDetailEntity = EmployeeDetailEntity.newInstance();
     employeeDetailEntity.setUserLogin(userLoginTestEntity(sessionFactory));
     employeeDetailEntity.setFirstName("test first name");
@@ -36,8 +37,8 @@ class EntityUtil {
     employeeDetailEntity.setEmployeeStatus("employee");
     employeeDetailEntity.setEmployeeType("full-time");
     employeeDetailEntity.setEmployeeGrade("L1");
-    employeeDetailEntity.setStartDate(now);
-    employeeDetailEntity.setEndDate(now);
+    employeeDetailEntity.setStartDate(timestamp);
+    employeeDetailEntity.setEndDate(timestamp);
     return employeeDetailRepository.save(employeeDetailEntity);
   }
 

@@ -33,19 +33,19 @@ message EmployeeDetailResponse {
   string empStatus = 5;
   string empType = 6;
   string empGrade = 7;
-  google.protobuf.Timestamp startDate = 8;
-  google.protobuf.Timestamp endDate = 9;
+  string startDate = 8;
+  string endDate = 9;
 }
 
-message EmployeeDetailRequest {
+message CreateEmployeeDetail {
   UserResponse userId = 1;
   string firstName = 2;
   string lastName = 3;
   string empStatus = 4;
   string empType = 5;
   string empGrade = 6;
-  google.protobuf.Timestamp startDate = 7;
-  google.protobuf.Timestamp endDate = 8;
+  string startDate = 7;
+  string endDate = 8;
 }
 
 message GetEmployeetDetailById {
@@ -54,7 +54,7 @@ message GetEmployeetDetailById {
 
 message UpdateEmployeeDetail {
   int64 id = 1;
-  EmployeeDetailRequest request = 2;
+  CreateEmployeeDetail request = 2;
 }
 
 message ProjectResponse {
@@ -174,7 +174,7 @@ service UserLoginService {
 
 service EmployeeDetailService {
   //CRUD methods for EmployeeDetail
-  rpc createEmployeeDetail(EmployeeDetailRequest) returns (EmployeeDetailResponse);
+  rpc createEmployeeDetail(CreateEmployeeDetail) returns (EmployeeDetailResponse);
   rpc getEmployeeDetailById(GetEmployeetDetailById) returns (EmployeeDetailResponse);
   rpc updateEmployeeDetail(UpdateEmployeeDetail) returns (EmployeeDetailResponse);
   rpc deleteEmployeeDetail(GetEmployeetDetailById) returns (EmployeeDetailResponse);
