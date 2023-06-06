@@ -7,6 +7,7 @@ import io.admin.timesheet.CreateEmployeeDetail;
 import io.admin.timesheet.EmployeeDetailResponse;
 import io.admin.timesheet.EmployeeDetailServiceGrpc.EmployeeDetailServiceImplBase;
 import io.admin.timesheet.GetEmployeetDetailById;
+import io.admin.timesheet.GetProjectsResponse;
 import io.admin.timesheet.UpdateEmployeeDetail;
 import io.admin.util.RequestBuilderUtil;
 import io.dropwizard.hibernate.UnitOfWork;
@@ -64,5 +65,14 @@ public class EmployeeDetailServiceImpl extends EmployeeDetailServiceImplBase {
     EmployeeDetailEntity response = repository.getById(id).get();
     repository.deleteById(id);
     RequestBuilderUtil.employeeDetailResponse(response, responseObserver);
+  }
+
+  @UnitOfWork
+  @Override
+  public void getProjects(GetEmployeetDetailById request, StreamObserver<GetProjectsResponse> responseObserver) {
+    final EmployeeDetailEntityRepository repository = dbBuilder.getEmployeeDetailEntityRepository();
+    Long id = request.getId();
+    EmployeeDetailEntity response = repository.getById(id).get();
+    RequestBuilderUtil.getProjectsResponse(response, responseObserver);
   }
 }

@@ -6,7 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import java.time.OffsetDateTime;
+import java.sql.Timestamp;
 import java.util.Objects;
 
 /**
@@ -27,11 +27,11 @@ public class ProjectEntity extends AbstractEntity {
 
   @Nullable
   @Column(name = "start_date")
-  private OffsetDateTime startDate;
+  private Timestamp startDate;
 
   @Nullable
   @Column(name = "end_date")
-  private OffsetDateTime endDate;
+  private Timestamp endDate;
 
   @Nullable
   //TODO: Change column name to project_status
@@ -59,20 +59,20 @@ public class ProjectEntity extends AbstractEntity {
   }
 
   @Nullable
-  public OffsetDateTime getStartDate() {
+  public Timestamp getStartDate() {
     return startDate;
   }
 
-  public void setStartDate(@Nullable OffsetDateTime startDate) {
+  public void setStartDate(@Nullable Timestamp startDate) {
     this.startDate = startDate;
   }
 
   @Nullable
-  public OffsetDateTime getEndDate() {
+  public Timestamp getEndDate() {
     return endDate;
   }
 
-  public void setEndDate(@Nullable OffsetDateTime endDate) {
+  public void setEndDate(@Nullable Timestamp endDate) {
     this.endDate = endDate;
   }
 

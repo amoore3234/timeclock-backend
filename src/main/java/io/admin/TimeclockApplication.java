@@ -7,8 +7,10 @@ import io.admin.core.ProjectEntity;
 import io.admin.core.TimesheetEntity;
 import io.admin.core.UserLoginEntity;
 import io.admin.db.EmployeeDetailEntityRepository;
+import io.admin.db.ProjectEntityRepository;
 import io.admin.db.UserLoginEntityRepository;
 import io.admin.service.EmployeeDetailServiceImpl;
+import io.admin.service.ProjectServiceImpl;
 import io.admin.service.UserLoginServiceImpl;
 import io.dropwizard.core.Application;
 import io.dropwizard.core.setup.Bootstrap;
@@ -66,21 +68,27 @@ public class TimeclockApplication extends Application<TimeclockConfiguration> {
                       new UserLoginEntityRepository(hibernateBundle.getSessionFactory()))
                     .setEmployeeDetailEntityRepository(
                       new EmployeeDetailEntityRepository(hibernateBundle.getSessionFactory()))
+                    .setProjectEntityRepository(
+                      new ProjectEntityRepository(hibernateBundle.getSessionFactory()))
                     .build();
     logger.info("Creating service with UnitOfWorkAwareProxyFactory");
-    final UserLoginServiceImpl service = new UnitOfWorkAwareProxyFactory(hibernateBundle)
+    final UserLoginServiceImpl userLoginService = new UnitOfWorkAwareProxyFactory(hibernateBundle)
         .create(UserLoginServiceImpl.class, new Class<?>[]{DbBuilder.class},
           new Object[]{dbBuilder});
     final EmployeeDetailServiceImpl employeeDetailService =
         new UnitOfWorkAwareProxyFactory(hibernateBundle)
           .create(EmployeeDetailServiceImpl.class, new Class<?>[]{DbBuilder.class},
             new Object[]{dbBuilder});
+    final ProjectServiceImpl projectService = new UnitOfWorkAwareProxyFactory(hibernateBundle)
+        .create(ProjectServiceImpl.class, new Class<?>[]{DbBuilder.class},
+          new Object[]{dbBuilder});
 
     logger.info("Create gRPC server");
     final Server server = configuration.getGrpcServerFactory()
                           .builder(environment)
-                          .addService(service)
+                          .addService(userLoginService)
                           .addService(employeeDetailService)
+                          .addService(projectService)
                           .build();
 
     try {

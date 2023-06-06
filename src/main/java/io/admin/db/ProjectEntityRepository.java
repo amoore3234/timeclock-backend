@@ -8,7 +8,7 @@ import org.hibernate.SessionFactory;
  */
 public class ProjectEntityRepository extends AbstractRepository<ProjectEntity> {
 
-  protected ProjectEntityRepository(SessionFactory sessionFactory) {
+  public ProjectEntityRepository(SessionFactory sessionFactory) {
     super(sessionFactory);
   }
 
