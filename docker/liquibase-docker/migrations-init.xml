@@ -43,6 +43,7 @@
       <column name="employee_detail_id" type="bigint">
         <constraints nullable="false" />
       </column>
+      <column name="project_name" type="varchar(40)" />
       <column name="start_date" type="timestamp with time zone" />
       <column name="end_date" type="timestamp with time zone" />
       <column name="proj_status" type="varchar(40)" />

@@ -45,12 +45,12 @@ class EntityUtil {
   static ProjectEntity projectTestEntity(SessionFactory sessionFactory) {
     final ProjectEntityRepository projectRepository = new ProjectEntityRepository(sessionFactory);
 
-    final OffsetDateTime now = OffsetDateTime.now();
+    final Timestamp timestamp = Timestamp.valueOf("2018-09-01 09:01:15");
     final ProjectEntity projectEntity = ProjectEntity.newInstance();
     projectEntity.setEmployeeDetail(employeeDetailTestEntity(sessionFactory));
     projectEntity.setProjectName("test name");
-    projectEntity.setStartDate(now);
-    projectEntity.setEndDate(now);
+    projectEntity.setStartDate(timestamp);
+    projectEntity.setEndDate(timestamp);
     projectEntity.setProjectStatus("active");
     return projectRepository.save(projectEntity);
   }

@@ -3,9 +3,12 @@ package io.admin.service;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import io.admin.core.EmployeeDetailEntity;
+import io.admin.core.ProjectEntity;
 import io.admin.core.UserLoginEntity;
 import io.admin.db.EmployeeDetailEntityRepository;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -75,7 +78,7 @@ class EmployeeDetailServiceImplTest {
   }
 
   @Test
-  void testCreateUser() {
+  void testEmployeeDetail() {
     final String date = "2020-07-01 19:10:25";
     final Long userLoginId = 1L;
     final String firstName = "test first name";
@@ -136,7 +139,7 @@ class EmployeeDetailServiceImplTest {
   }
 
   @Test
-  void testUpdateUser() {
+  void testUpdateEmployeeDetail() {
     final String date = "2020-07-01 19:10:25";
     final Long id = 1L;
     final Long userLoginId = 1L;
@@ -194,5 +197,57 @@ class EmployeeDetailServiceImplTest {
     Mockito.verify(employeeDetailEntityRepository).deleteById(idCaptor.capture());
 
     assertThat(idCaptor.getValue()).isEqualTo(id);
+  }
+
+  @Test
+  void testGetProjects() {
+    final String date = "2020-07-01 19:10:25";
+    final Long id = 1L;
+    final Long employeeDetailId = 1L;
+    final String projectName = "test project name";
+    final String projectStatus = "active";
+    final Timestamp startDate = Timestamp.valueOf(date);
+    final Timestamp endDate = Timestamp.valueOf(date);
+
+    final List<ProjectEntity> projectList = new ArrayList<>();
+    final ProjectEntity mockProjectEntity1 = Mockito.mock(ProjectEntity.class);
+    final ProjectEntity mockProjectEntity2 = Mockito.mock(ProjectEntity.class);
+    final EmployeeDetailEntity mockEmployeeDetailEntity = Mockito.mock(EmployeeDetailEntity.class);
+
+    Mockito.when(mockEmployeeDetailEntity.getId()).thenReturn(employeeDetailId);
+
+    Mockito.when(mockProjectEntity1.getProjectName()).thenReturn(projectName);
+    Mockito.when(mockProjectEntity1.getProjectStatus()).thenReturn(projectStatus);
+    Mockito.when(mockProjectEntity1.getStartDate()).thenReturn(startDate);
+    Mockito.when(mockProjectEntity1.getEndDate()).thenReturn(endDate);
+    projectList.add(0, mockProjectEntity1);
+
+    Mockito.when(mockProjectEntity2.getProjectName()).thenReturn(projectName);
+    Mockito.when(mockProjectEntity2.getProjectStatus()).thenReturn(projectStatus);
+    Mockito.when(mockProjectEntity2.getStartDate()).thenReturn(startDate);
+    Mockito.when(mockProjectEntity2.getEndDate()).thenReturn(endDate);
+    projectList.add(1, mockProjectEntity2);
+
+    Mockito.when(mockEmployeeDetailEntity.getProjects()).thenReturn(projectList);
+
+
+    Mockito.when(employeeDetailEntityRepository.save(Mockito.any(EmployeeDetailEntity.class)))
+        .thenReturn(mockEmployeeDetailEntity);
+    Mockito.when(employeeDetailEntityRepository.getById(Mockito.any(Long.class)))
+        .thenReturn(Optional.of(mockEmployeeDetailEntity));
+
+    final ArgumentCaptor<Long> idCaptor = ArgumentCaptor.forClass(Long.class);
+    EmployeeDetailEntity response = employeeDetailEntityRepository.getById(id).get();
+    Mockito.verify(employeeDetailEntityRepository).getById(idCaptor.capture());
+
+    assertThat(idCaptor.getValue()).isEqualTo(id);
+    assertThat(response.getProjects().get(0).getProjectName()).isEqualTo(projectName);
+    assertThat(response.getProjects().get(0).getProjectStatus()).isEqualTo(projectStatus);
+    assertThat(response.getProjects().get(0).getStartDate()).isEqualTo(startDate);
+    assertThat(response.getProjects().get(0).getEndDate()).isEqualTo(endDate);
+    assertThat(response.getProjects().get(1).getProjectName()).isEqualTo(projectName);
+    assertThat(response.getProjects().get(1).getProjectStatus()).isEqualTo(projectStatus);
+    assertThat(response.getProjects().get(1).getStartDate()).isEqualTo(startDate);
+    assertThat(response.getProjects().get(1).getEndDate()).isEqualTo(endDate);
   }
 }
