@@ -90,12 +90,12 @@ message GetProjectsResponse {
 message HolidayResponse {
   int64 id = 1;
   string holidayName = 2;
-  google.protobuf.Timestamp date = 3;
+  string date = 3;
 }
 
-message HolidayRequest {
+message CreateHoliday {
   string holidayName = 1;
-  google.protobuf.Timestamp date = 2;
+  string date = 2;
 }
 
 message GetHolidayById {
@@ -103,7 +103,8 @@ message GetHolidayById {
 }
 
 message UpdateHoliday {
-  HolidayRequest request = 1;
+  int64 id = 1;
+  CreateHoliday request = 2;
 }
 
 message TimesheetResponse {
@@ -191,7 +192,7 @@ service ProjectService {
 
 service HolidayService {
   //CRUD methods for Holiday
-  rpc createHoliday(HolidayRequest) returns (HolidayResponse);
+  rpc createHoliday(CreateHoliday) returns (HolidayResponse);
   rpc getHolidayById(GetHolidayById) returns (HolidayResponse);
   rpc updateHoliday(UpdateHoliday) returns (HolidayResponse);
   rpc deleteHoliday(GetHolidayById) returns (HolidayResponse);

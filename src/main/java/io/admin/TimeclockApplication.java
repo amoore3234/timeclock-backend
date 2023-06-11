@@ -7,9 +7,11 @@ import io.admin.core.ProjectEntity;
 import io.admin.core.TimesheetEntity;
 import io.admin.core.UserLoginEntity;
 import io.admin.db.EmployeeDetailEntityRepository;
+import io.admin.db.HolidayEntityRepository;
 import io.admin.db.ProjectEntityRepository;
 import io.admin.db.UserLoginEntityRepository;
 import io.admin.service.EmployeeDetailServiceImpl;
+import io.admin.service.HolidayServiceImpl;
 import io.admin.service.ProjectServiceImpl;
 import io.admin.service.UserLoginServiceImpl;
 import io.dropwizard.core.Application;
@@ -70,6 +72,8 @@ public class TimeclockApplication extends Application<TimeclockConfiguration> {
                       new EmployeeDetailEntityRepository(hibernateBundle.getSessionFactory()))
                     .setProjectEntityRepository(
                       new ProjectEntityRepository(hibernateBundle.getSessionFactory()))
+                    .setHolidayEntityRepository(
+                      new HolidayEntityRepository(hibernateBundle.getSessionFactory()))
                     .build();
     logger.info("Creating service with UnitOfWorkAwareProxyFactory");
     final UserLoginServiceImpl userLoginService = new UnitOfWorkAwareProxyFactory(hibernateBundle)
@@ -82,6 +86,9 @@ public class TimeclockApplication extends Application<TimeclockConfiguration> {
     final ProjectServiceImpl projectService = new UnitOfWorkAwareProxyFactory(hibernateBundle)
         .create(ProjectServiceImpl.class, new Class<?>[]{DbBuilder.class},
           new Object[]{dbBuilder});
+    final HolidayServiceImpl holidayService = new UnitOfWorkAwareProxyFactory(hibernateBundle)
+        .create(HolidayServiceImpl.class, new Class<?>[]{DbBuilder.class},
+          new Object[]{dbBuilder});
 
     logger.info("Create gRPC server");
     final Server server = configuration.getGrpcServerFactory()
@@ -89,6 +96,7 @@ public class TimeclockApplication extends Application<TimeclockConfiguration> {
                           .addService(userLoginService)
                           .addService(employeeDetailService)
                           .addService(projectService)
+                          .addService(holidayService)
                           .build();
 
     try {

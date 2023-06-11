@@ -5,7 +5,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import java.time.OffsetDateTime;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Objects;
 
@@ -22,7 +22,7 @@ public class HolidayEntity extends AbstractEntity {
 
   @Nullable
   @Column(name = "date")
-  private OffsetDateTime date;
+  private Timestamp date;
 
   @Nullable
   @OneToMany(mappedBy = "holiday")
@@ -40,11 +40,11 @@ public class HolidayEntity extends AbstractEntity {
   }
 
   @Nullable
-  public OffsetDateTime getDate() {
+  public Timestamp getDate() {
     return date;
   }
 
-  public void setDate(@Nullable OffsetDateTime date) {
+  public void setDate(@Nullable Timestamp date) {
     this.date = date;
   }
 

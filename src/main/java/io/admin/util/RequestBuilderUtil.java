@@ -1,15 +1,19 @@
 package io.admin.util;
 
 import io.admin.core.EmployeeDetailEntity;
+import io.admin.core.HolidayEntity;
 import io.admin.core.ProjectEntity;
 import io.admin.core.UserLoginEntity;
 import io.admin.timesheet.CreateEmployeeDetail;
+import io.admin.timesheet.CreateHoliday;
 import io.admin.timesheet.CreateProject;
 import io.admin.timesheet.CreateUser;
 import io.admin.timesheet.EmployeeDetailResponse;
 import io.admin.timesheet.GetProjectsResponse;
+import io.admin.timesheet.HolidayResponse;
 import io.admin.timesheet.ProjectResponse;
 import io.admin.timesheet.UpdateEmployeeDetail;
+import io.admin.timesheet.UpdateHoliday;
 import io.admin.timesheet.UpdateProject;
 import io.admin.timesheet.UpdateUser;
 import io.admin.timesheet.UserResponse;
@@ -74,6 +78,33 @@ public class RequestBuilderUtil {
     project.setStartDate(Timestamp.valueOf(request.getStartDate()));
     project.setEndDate(Timestamp.valueOf(request.getEndDate()));
     return project;
+  }
+
+  /**
+   * Creates a Holiday entity from a request.
+   *
+   * @param request {@link CreateHoliday} defines a request stub.
+   * @return returns a UserLogin object.
+   */
+  public static HolidayEntity createHolidayRequest(CreateHoliday request) {
+    final HolidayEntity holiday = HolidayEntity.newInstance();
+    holiday.setHolidayName(request.getHolidayName());
+    holiday.setDate(Timestamp.valueOf(request.getDate()));
+    return holiday;
+  }
+
+  /**
+   * Creates a Holiday entity from a request.
+   *
+   * @param request {@link UpdateHoliday} defines a request stub.
+   * @return returns a Holiday object.
+   */
+  public static HolidayEntity updateHolidayRequest(UpdateHoliday request,
+      HolidayEntity updateHoliday) {
+    updateHoliday.setId(request.getId());
+    updateHoliday.setHolidayName(request.getRequest().getHolidayName());
+    updateHoliday.setDate(Timestamp.valueOf(request.getRequest().getDate()));
+    return updateHoliday;
   }
 
   /**
@@ -250,6 +281,25 @@ public class RequestBuilderUtil {
     GetProjectsResponse projectResponse = GetProjectsResponse.newBuilder()
         .addAllProjects(employeeProjects).build();
     responseObserver.onNext(projectResponse);
+    responseObserver.onCompleted();
+    return responseObserver;
+  }
+
+  /**
+   * Creates a Holiday response.
+   *
+   * @param holiday {@link HolidayEntity} defines a Holiday entity.
+   * @param responseObserver {@link HolidayResponse} defines a StreamObserver response stub.
+   * @return returns a StreamObserver response for Holiday.
+   */
+  public static StreamObserver<HolidayResponse> holidayResponse(
+      HolidayEntity holiday, StreamObserver<HolidayResponse> responseObserver) {
+    io.admin.timesheet.HolidayResponse.Builder holidayResponseBuilder = HolidayResponse.newBuilder()
+        .setId(holiday.getId())
+        .setHolidayName(holiday.getHolidayName())
+        .setDate(holiday.getDate().toString());
+    HolidayResponse holidayResponse = holidayResponseBuilder.build();
+    responseObserver.onNext(holidayResponse);
     responseObserver.onCompleted();
     return responseObserver;
   }

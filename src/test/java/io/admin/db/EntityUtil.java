@@ -86,10 +86,10 @@ class EntityUtil {
   static HolidayEntity holidayTestEntity(SessionFactory sessionFactory) {
     final HolidayEntityRepository holidayRepository = new HolidayEntityRepository(sessionFactory);
 
-    final OffsetDateTime now = OffsetDateTime.now();
+    final Timestamp timestamp = Timestamp.valueOf("2018-09-01 09:01:15");
     final HolidayEntity holidayEntity = HolidayEntity.newInstance();
     holidayEntity.setHolidayName("test name");
-    holidayEntity.setDate(now);
+    holidayEntity.setDate(timestamp);
     return holidayRepository.save(holidayEntity);
   }
 

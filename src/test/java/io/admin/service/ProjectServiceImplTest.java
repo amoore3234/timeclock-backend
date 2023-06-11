@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
-public class ProjectServiceImplTest {
+class ProjectServiceImplTest {
 
   private ProjectEntityRepository projectEntityRepository;
 
