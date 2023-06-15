@@ -8,7 +8,7 @@ import org.hibernate.SessionFactory;
  */
 public class TimesheetEntityRepository extends AbstractRepository<TimesheetEntity> {
 
-  protected TimesheetEntityRepository(SessionFactory sessionFactory) {
+  public TimesheetEntityRepository(SessionFactory sessionFactory) {
     super(sessionFactory);
   }
 

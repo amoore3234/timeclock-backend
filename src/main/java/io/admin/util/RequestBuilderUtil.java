@@ -3,22 +3,29 @@ package io.admin.util;
 import io.admin.core.EmployeeDetailEntity;
 import io.admin.core.HolidayEntity;
 import io.admin.core.ProjectEntity;
+import io.admin.core.TimesheetEntity;
 import io.admin.core.UserLoginEntity;
 import io.admin.timesheet.CreateEmployeeDetail;
 import io.admin.timesheet.CreateHoliday;
 import io.admin.timesheet.CreateProject;
+import io.admin.timesheet.CreateTimesheet;
 import io.admin.timesheet.CreateUser;
 import io.admin.timesheet.EmployeeDetailResponse;
 import io.admin.timesheet.GetProjectsResponse;
 import io.admin.timesheet.HolidayResponse;
 import io.admin.timesheet.ProjectResponse;
+import io.admin.timesheet.TimesheetResponse;
 import io.admin.timesheet.UpdateEmployeeDetail;
 import io.admin.timesheet.UpdateHoliday;
 import io.admin.timesheet.UpdateProject;
+import io.admin.timesheet.UpdateTimesheet;
 import io.admin.timesheet.UpdateUser;
 import io.admin.timesheet.UserResponse;
 import io.grpc.stub.StreamObserver;
 import java.sql.Timestamp;
+import java.time.Instant;
+import java.time.OffsetDateTime;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -91,6 +98,43 @@ public class RequestBuilderUtil {
     holiday.setHolidayName(request.getHolidayName());
     holiday.setDate(Timestamp.valueOf(request.getDate()));
     return holiday;
+  }
+
+  /**
+   * Creates a Timesheet entity from a request.
+   *
+   * @param request {@link CreateTimesheet} defines a request stub.
+   * @return returns a Timesheet object.
+   */
+  public static TimesheetEntity createTimesheetRequest(CreateTimesheet request) {
+    Instant instant = Instant.ofEpochMilli(request.getClockIn().getNanos());
+    final HolidayEntity holiday = HolidayEntity.newInstance();
+    final TimesheetEntity timesheet = TimesheetEntity.newInstance();
+    holiday.setId(request.getHolidayId().getId());
+    timesheet.setHoliday(holiday);
+    timesheet.setClockIn(OffsetDateTime.ofInstant(instant, ZoneId.systemDefault()));
+    timesheet.setClockOut(OffsetDateTime.ofInstant(instant, ZoneId.systemDefault()));
+    timesheet.setLunch(OffsetDateTime.ofInstant(instant, ZoneId.systemDefault()));
+    timesheet.setHoursWorked(request.getHoursWorked());
+    timesheet.setOvertime(request.getOvertime());
+    return timesheet;
+  }
+
+  /**
+   * Creates a Timesheet entity from a request.
+   *
+   * @param request {@link UpdateTimesheet} defines a request stub.
+   * @return returns a Timesheet object.
+   */
+  public static TimesheetEntity updateTimesheetRequest(UpdateTimesheet request,
+      TimesheetEntity updateTimesheet) {
+    final HolidayEntity holiday = HolidayEntity.newInstance();
+    final TimesheetEntity timesheet = TimesheetEntity.newInstance();
+    holiday.setId(request.getRequest().getHolidayId().getId());
+    updateTimesheet.setHoliday(holiday);
+    updateTimesheet.setHoursWorked(request.getRequest().getHoursWorked());
+    updateTimesheet.setOvertime(request.getRequest().getOvertime());
+    return timesheet;
   }
 
   /**
@@ -300,6 +344,28 @@ public class RequestBuilderUtil {
         .setDate(holiday.getDate().toString());
     HolidayResponse holidayResponse = holidayResponseBuilder.build();
     responseObserver.onNext(holidayResponse);
+    responseObserver.onCompleted();
+    return responseObserver;
+  }
+
+  /**
+   * Creates a Timesheet response.
+   *
+   * @param timesheet {@link TimesheetEntity} defines a Timesheet entity.
+   * @param responseObserver {@link TimesheetResponse} defines a StreamObserver response stub.
+   * @return returns a StreamObserver response for Timesheet.
+   */
+  public static StreamObserver<TimesheetResponse> timesheetResponse(
+      TimesheetEntity timesheet, StreamObserver<TimesheetResponse> responseObserver) {
+    io.admin.timesheet.TimesheetResponse.Builder timesheetResponseBuilder = TimesheetResponse.newBuilder()
+        .setId(timesheet.getId())
+        .setClockIn(com.google.protobuf.Timestamp.newBuilder().setNanos(timesheet.getClockIn().getNano()).build())
+        .setClockOut(com.google.protobuf.Timestamp.newBuilder().setNanos(timesheet.getClockOut().getNano()).build())
+        .setLunch(com.google.protobuf.Timestamp.newBuilder().setNanos(timesheet.getLunch().getNano()).build())
+        .setHoursWorked(timesheet.getHoursWorked())
+        .setOvertime(timesheet.getOvertime());
+    TimesheetResponse timesheetResponse = timesheetResponseBuilder.build();
+    responseObserver.onNext(timesheetResponse);
     responseObserver.onCompleted();
     return responseObserver;
   }

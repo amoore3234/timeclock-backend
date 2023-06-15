@@ -9,10 +9,12 @@ import io.admin.core.UserLoginEntity;
 import io.admin.db.EmployeeDetailEntityRepository;
 import io.admin.db.HolidayEntityRepository;
 import io.admin.db.ProjectEntityRepository;
+import io.admin.db.TimesheetEntityRepository;
 import io.admin.db.UserLoginEntityRepository;
 import io.admin.service.EmployeeDetailServiceImpl;
 import io.admin.service.HolidayServiceImpl;
 import io.admin.service.ProjectServiceImpl;
+import io.admin.service.TimesheetServiceImpl;
 import io.admin.service.UserLoginServiceImpl;
 import io.dropwizard.core.Application;
 import io.dropwizard.core.setup.Bootstrap;
@@ -74,6 +76,8 @@ public class TimeclockApplication extends Application<TimeclockConfiguration> {
                       new ProjectEntityRepository(hibernateBundle.getSessionFactory()))
                     .setHolidayEntityRepository(
                       new HolidayEntityRepository(hibernateBundle.getSessionFactory()))
+                    .setTimesheetEntityRepository(
+                      new TimesheetEntityRepository(hibernateBundle.getSessionFactory()))
                     .build();
     logger.info("Creating service with UnitOfWorkAwareProxyFactory");
     final UserLoginServiceImpl userLoginService = new UnitOfWorkAwareProxyFactory(hibernateBundle)
@@ -89,6 +93,9 @@ public class TimeclockApplication extends Application<TimeclockConfiguration> {
     final HolidayServiceImpl holidayService = new UnitOfWorkAwareProxyFactory(hibernateBundle)
         .create(HolidayServiceImpl.class, new Class<?>[]{DbBuilder.class},
           new Object[]{dbBuilder});
+    final TimesheetServiceImpl timesheetService = new UnitOfWorkAwareProxyFactory(hibernateBundle)
+        .create(TimesheetServiceImpl.class, new Class<?>[]{DbBuilder.class},
+          new Object[]{dbBuilder});
 
     logger.info("Create gRPC server");
     final Server server = configuration.getGrpcServerFactory()
@@ -97,6 +104,7 @@ public class TimeclockApplication extends Application<TimeclockConfiguration> {
                           .addService(employeeDetailService)
                           .addService(projectService)
                           .addService(holidayService)
+                          .addService(timesheetService)
                           .build();
 
     try {
