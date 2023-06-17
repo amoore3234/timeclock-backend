@@ -94,7 +94,11 @@ public class RequestBuilderUtil {
    * @return returns a UserLogin object.
    */
   public static HolidayEntity createHolidayRequest(CreateHoliday request) {
+    final TimesheetEntity timesheetEntity = TimesheetEntity.newInstance();
     final HolidayEntity holiday = HolidayEntity.newInstance();
+    timesheetEntity.setId(request.getTimesheetId().getId());
+    holiday.setTimesheet(timesheetEntity);
+    holiday.setTimesheet(timesheetEntity);
     holiday.setHolidayName(request.getHolidayName());
     holiday.setDate(Timestamp.valueOf(request.getDate()));
     return holiday;
@@ -108,10 +112,7 @@ public class RequestBuilderUtil {
    */
   public static TimesheetEntity createTimesheetRequest(CreateTimesheet request) {
     Instant instant = Instant.ofEpochMilli(request.getClockIn().getNanos());
-    final HolidayEntity holiday = HolidayEntity.newInstance();
     final TimesheetEntity timesheet = TimesheetEntity.newInstance();
-    holiday.setId(request.getHolidayId().getId());
-    timesheet.setHoliday(holiday);
     timesheet.setClockIn(OffsetDateTime.ofInstant(instant, ZoneId.systemDefault()));
     timesheet.setClockOut(OffsetDateTime.ofInstant(instant, ZoneId.systemDefault()));
     timesheet.setLunch(OffsetDateTime.ofInstant(instant, ZoneId.systemDefault()));
@@ -128,10 +129,7 @@ public class RequestBuilderUtil {
    */
   public static TimesheetEntity updateTimesheetRequest(UpdateTimesheet request,
       TimesheetEntity updateTimesheet) {
-    final HolidayEntity holiday = HolidayEntity.newInstance();
     final TimesheetEntity timesheet = TimesheetEntity.newInstance();
-    holiday.setId(request.getRequest().getHolidayId().getId());
-    updateTimesheet.setHoliday(holiday);
     updateTimesheet.setHoursWorked(request.getRequest().getHoursWorked());
     updateTimesheet.setOvertime(request.getRequest().getOvertime());
     return timesheet;

@@ -36,7 +36,6 @@ public class TimesheetEntityIntegrationTest extends AbstractRepositoryIntegratio
 
     final TimesheetEntity timesheetEntity = timesheetRepository.getById(id).get();
 
-    assertThat(timesheetEntity.getHoliday()).isNotNull();
     assertThat(timesheetEntity.getClockIn()).isNotNull();
     assertThat(timesheetEntity.getClockOut()).isNotNull();
     assertThat(timesheetEntity.getLunch()).isNotNull();

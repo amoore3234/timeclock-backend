@@ -3,10 +3,10 @@ package io.admin.core;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import java.sql.Timestamp;
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -17,16 +17,17 @@ import java.util.Objects;
 public class HolidayEntity extends AbstractEntity {
 
   @Nullable
+  @OneToOne
+  @JoinColumn(name = "timesheet_id", referencedColumnName = "id")
+  private TimesheetEntity timesheet;
+
+  @Nullable
   @Column(name = "holiday_name")
   private String holidayName;
 
   @Nullable
   @Column(name = "date")
   private Timestamp date;
-
-  @Nullable
-  @OneToMany(mappedBy = "holiday")
-  private List<TimesheetEntity> timesheets;
 
   protected HolidayEntity() {}
 
@@ -49,12 +50,12 @@ public class HolidayEntity extends AbstractEntity {
   }
 
   @Nullable
-  public List<TimesheetEntity> getTimesheets() {
-    return timesheets;
+  public TimesheetEntity getTimesheet() {
+    return timesheet;
   }
 
-  public void setTimesheets(@Nullable List<TimesheetEntity> timesheets) {
-    this.timesheets = timesheets;
+  public void setTimesheet(@Nullable TimesheetEntity timesheet) {
+    this.timesheet = timesheet;
   }
 
   @Override
@@ -69,7 +70,7 @@ public class HolidayEntity extends AbstractEntity {
     return getId() == other.getId()
       && Objects.equals(holidayName, other.holidayName)
       && Objects.equals(date, other.date)
-      && Objects.equals(timesheets, other.timesheets);
+      && Objects.equals(timesheet, other.timesheet);
   }
 
   public static HolidayEntity newInstance() {

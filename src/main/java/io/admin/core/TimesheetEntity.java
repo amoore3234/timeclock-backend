@@ -3,9 +3,8 @@ package io.admin.core;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import java.time.OffsetDateTime;
 import java.util.List;
@@ -17,11 +16,6 @@ import java.util.Objects;
 @Entity
 @Table(name = "timesheet")
 public class TimesheetEntity extends AbstractEntity {
-
-  @Nullable
-  @ManyToOne
-  @JoinColumn(name = "holiday_id", referencedColumnName = "id")
-  private HolidayEntity holiday;
 
   @Nullable
   @Column(name = "clock_in")
@@ -47,14 +41,18 @@ public class TimesheetEntity extends AbstractEntity {
   @OneToMany(mappedBy = "timesheet")
   private List<EmployeeTimesheetEntity> employeeTimesheets;
 
+  @Nullable
+  @OneToOne(mappedBy = "timesheet")
+  private HolidayEntity holiday;
+
   protected TimesheetEntity() {}
 
   @Nullable
-  public HolidayEntity getHoliday() {
+  public HolidayEntity getHolidays() {
     return holiday;
   }
 
-  public void setHoliday(@Nullable HolidayEntity holiday) {
+  public void setHolidays(@Nullable HolidayEntity holiday) {
     this.holiday = holiday;
   }
 

@@ -36,6 +36,7 @@ class HolidayEntityIntegrationTest extends AbstractRepositoryIntegrationTest {
 
     final HolidayEntity holidayEntity = holidayRepository.getById(id).get();
 
+    assertThat(holidayEntity.getTimesheet()).isNotNull();
     assertThat(holidayEntity.getHolidayName()).isNotNull();
     assertThat(holidayEntity.getDate()).isNotNull();
   }

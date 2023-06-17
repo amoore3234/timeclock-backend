@@ -22,7 +22,7 @@ public class TimesheetServiceImplTest {
   }
 
   @Test
-  void testGetEmployeeDetailById() {
+  void testGetTimesheetById() {
     final OffsetDateTime now = OffsetDateTime.now();
     final Long id = 1L;
     final Long holidayId = 1L;
@@ -37,7 +37,6 @@ public class TimesheetServiceImplTest {
 
     Mockito.when(mockHolidayEntity.getId()).thenReturn(holidayId);
 
-    Mockito.when(mockTimesheetEntity.getHoliday()).thenReturn(mockHolidayEntity);
     Mockito.when(mockTimesheetEntity.getClockIn()).thenReturn(clockIn);
     Mockito.when(mockTimesheetEntity.getClockOut()).thenReturn(clockOut);
     Mockito.when(mockTimesheetEntity.getLunch()).thenReturn(lunch);
@@ -65,7 +64,7 @@ public class TimesheetServiceImplTest {
   }
 
   @Test
-  void testCreateUser() {
+  void testCreateTimesheet() {
     final OffsetDateTime now = OffsetDateTime.now();
     final Long holidayId = 1L;
     final OffsetDateTime clockIn = now;
@@ -79,7 +78,6 @@ public class TimesheetServiceImplTest {
 
     Mockito.when(mockHolidayEntity.getId()).thenReturn(holidayId);
 
-    Mockito.when(mockTimesheetEntity.getHoliday()).thenReturn(mockHolidayEntity);
     Mockito.when(mockTimesheetEntity.getClockIn()).thenReturn(clockIn);
     Mockito.when(mockTimesheetEntity.getClockOut()).thenReturn(clockOut);
     Mockito.when(mockTimesheetEntity.getLunch()).thenReturn(lunch);
@@ -95,17 +93,14 @@ public class TimesheetServiceImplTest {
     Mockito.verify(timesheetEntityRepository).save(captor.capture());
     final TimesheetEntity created = captor.getValue();
 
-    assertThat(mockTimesheetEntity.getHoliday()).isNotNull();
     assertThat(mockTimesheetEntity.getClockIn()).isEqualTo(clockIn);
     assertThat(mockTimesheetEntity.getClockOut()).isEqualTo(clockOut);
     assertThat(mockTimesheetEntity.getLunch()).isEqualTo(lunch);
     assertThat(mockTimesheetEntity.getHoursWorked()).isEqualTo(hoursWorked);
-    assertThat(response.getHoliday()).isNotNull();
     assertThat(response.getClockIn()).isEqualTo(clockIn);
     assertThat(response.getClockOut()).isEqualTo(clockOut);
     assertThat(response.getLunch()).isEqualTo(lunch);
     assertThat(response.getHoursWorked()).isEqualTo(hoursWorked);
-    assertThat(created.getHoliday()).isNotNull();
     assertThat(created.getClockIn()).isEqualTo(clockIn);
     assertThat(created.getClockOut()).isEqualTo(clockOut);
     assertThat(created.getLunch()).isEqualTo(lunch);
@@ -113,10 +108,9 @@ public class TimesheetServiceImplTest {
   }
 
   @Test
-  void testUpdateUser() {
+  void testUpdateTimesheet() {
     final OffsetDateTime now = OffsetDateTime.now();
     final Long id = 1L;
-    final Long holidayId = 1L;
     final OffsetDateTime clockIn = now;
     final OffsetDateTime clockOut = now;
     final OffsetDateTime lunch = now;
@@ -124,11 +118,7 @@ public class TimesheetServiceImplTest {
     final int overtime = 2;
 
     final TimesheetEntity mockTimesheetEntity = Mockito.mock(TimesheetEntity.class);
-    final HolidayEntity mockHolidayEntity = Mockito.mock(HolidayEntity.class);
 
-    Mockito.when(mockHolidayEntity.getId()).thenReturn(holidayId);
-
-    Mockito.when(mockTimesheetEntity.getHoliday()).thenReturn(mockHolidayEntity);
     Mockito.when(mockTimesheetEntity.getClockIn()).thenReturn(clockIn);
     Mockito.when(mockTimesheetEntity.getClockOut()).thenReturn(clockOut);
     Mockito.when(mockTimesheetEntity.getLunch()).thenReturn(lunch);
