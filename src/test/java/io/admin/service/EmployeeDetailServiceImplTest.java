@@ -78,7 +78,7 @@ class EmployeeDetailServiceImplTest {
   }
 
   @Test
-  void testEmployeeDetail() {
+  void testCreateEmployeeDetail() {
     final String date = "2020-07-01 19:10:25";
     final Long userLoginId = 1L;
     final String firstName = "test first name";

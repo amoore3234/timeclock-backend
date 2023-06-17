@@ -3,6 +3,7 @@ package io.admin.service;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import io.admin.core.HolidayEntity;
+import io.admin.core.TimesheetEntity;
 import io.admin.db.HolidayEntityRepository;
 import java.sql.Timestamp;
 import java.util.Optional;
@@ -21,14 +22,19 @@ class HolidayServiceImplTest {
   }
 
   @Test
-  void testGetUserById() {
+  void testGetHolidayById() {
     final Long id = 1L;
+    final Long timesheetId = 1L;
     final String holidayName = "Independence Day";
     final String date = "2020-07-04 19:10:25";
     final Timestamp timestamp = Timestamp.valueOf(date);
 
-    HolidayEntity mockHolidayEntity = Mockito.mock(HolidayEntity.class);
+    final HolidayEntity mockHolidayEntity = Mockito.mock(HolidayEntity.class);
+    final TimesheetEntity mockTimesheetEntity = Mockito.mock(TimesheetEntity.class);
 
+    Mockito.when(mockTimesheetEntity.getId()).thenReturn(timesheetId);
+
+    Mockito.when(mockHolidayEntity.getTimesheet()).thenReturn(mockTimesheetEntity);
     Mockito.when(mockHolidayEntity.getHolidayName()).thenReturn(holidayName);
     Mockito.when(mockHolidayEntity.getDate()).thenReturn(timestamp);
 
@@ -46,13 +52,18 @@ class HolidayServiceImplTest {
   }
 
   @Test
-  void testCreateUser() {
+  void testCreateHoliday() {
+    final Long timesheetId = 1L;
     final String holidayName = "Independence Day";
     final String date = "2020-07-04 19:10:25";
     final Timestamp timestamp = Timestamp.valueOf(date);
 
-    HolidayEntity mockHolidayEntity = Mockito.mock(HolidayEntity.class);
+    final HolidayEntity mockHolidayEntity = Mockito.mock(HolidayEntity.class);
+    final TimesheetEntity mockTimesheetEntity = Mockito.mock(TimesheetEntity.class);
 
+    Mockito.when(mockTimesheetEntity.getId()).thenReturn(timesheetId);
+
+    Mockito.when(mockHolidayEntity.getTimesheet()).thenReturn(mockTimesheetEntity);
     Mockito.when(mockHolidayEntity.getHolidayName()).thenReturn(holidayName);
     Mockito.when(mockHolidayEntity.getDate()).thenReturn(timestamp);
 
@@ -63,22 +74,29 @@ class HolidayServiceImplTest {
     Mockito.verify(holidayEntityRepository).save(captor.capture());
     final HolidayEntity created = captor.getValue();
 
+    assertThat(created.getTimesheet()).isNotNull();
     assertThat(created.getHolidayName()).isEqualTo(holidayName);
     assertThat(created.getDate()).isEqualTo(timestamp);
+    assertThat(response.getTimesheet()).isNotNull();
     assertThat(response.getHolidayName()).isEqualTo(holidayName);
     assertThat(response.getDate()).isEqualTo(timestamp);
   }
 
   @Test
-  void testUpdateUser() {
+  void testUpdateHoliday() {
     final Long id = 1L;
+    final Long timesheetId = 1L;
     final String holidayName = "Independence Day";
     final String date = "2020-07-04 19:10:25";
     final Timestamp timestamp = Timestamp.valueOf(date);
 
-    HolidayEntity mockHolidayEntity = Mockito.mock(HolidayEntity.class);
+    final HolidayEntity mockHolidayEntity = Mockito.mock(HolidayEntity.class);
+    final TimesheetEntity mockTimesheetEntity = Mockito.mock(TimesheetEntity.class);
+
+    Mockito.when(mockTimesheetEntity.getId()).thenReturn(timesheetId);
 
     Mockito.when(mockHolidayEntity.getId()).thenReturn(id);
+    Mockito.when(mockHolidayEntity.getTimesheet()).thenReturn(mockTimesheetEntity);
     Mockito.when(mockHolidayEntity.getHolidayName()).thenReturn(holidayName);
     Mockito.when(mockHolidayEntity.getDate()).thenReturn(timestamp);
 

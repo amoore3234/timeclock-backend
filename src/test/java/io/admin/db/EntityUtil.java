@@ -74,7 +74,6 @@ class EntityUtil {
 
     final OffsetDateTime now = OffsetDateTime.now();
     final TimesheetEntity timesheetEntity = TimesheetEntity.newInstance();
-    timesheetEntity.setHoliday(holidayTestEntity(sessionFactory));
     timesheetEntity.setClockIn(now);
     timesheetEntity.setClockOut(now);
     timesheetEntity.setLunch(now);
@@ -88,6 +87,7 @@ class EntityUtil {
 
     final Timestamp timestamp = Timestamp.valueOf("2018-09-01 09:01:15");
     final HolidayEntity holidayEntity = HolidayEntity.newInstance();
+    holidayEntity.setTimesheet(timesheetTestEntity(sessionFactory));
     holidayEntity.setHolidayName("test name");
     holidayEntity.setDate(timestamp);
     return holidayRepository.save(holidayEntity);

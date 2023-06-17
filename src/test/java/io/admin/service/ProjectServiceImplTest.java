@@ -22,7 +22,7 @@ class ProjectServiceImplTest {
   }
 
   @Test
-  void testGetEmployeeDetailById() {
+  void testGetProjectById() {
     final String date = "2020-07-01 19:10:25";
     final Long id = 1L;
     final Long employeeDetailId = 1L;
@@ -63,7 +63,7 @@ class ProjectServiceImplTest {
   }
 
   @Test
-  void testCreateUser() {
+  void testCreateProject() {
     final String date = "2020-07-01 19:10:25";
     final Long employeeDetailId = 1L;
     final String projectName = "test project name";
@@ -109,7 +109,7 @@ class ProjectServiceImplTest {
   }
 
   @Test
-  void testUpdateUser() {
+  void testUpdateProject() {
     final String date = "2020-07-01 19:10:25";
     final Long id = 1L;
     final Long employeeDetailId = 1L;

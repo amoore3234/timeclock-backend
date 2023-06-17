@@ -67,9 +67,6 @@
       <column name="id" type="bigint" autoIncrement="true">
         <constraints primaryKey="true" nullable="false" />
       </column>
-      <column name="holiday_id" type="bigint">
-        <constraints nullable="false" />
-      </column>
       <column name="clock_in" type="timestamp with time zone" />
       <column name="clock_out" type="timestamp with time zone" />
       <column name="lunch" type="timestamp with time zone" />
@@ -80,6 +77,9 @@
     <createTable tableName="holiday">
       <column name="id" type="bigint" autoIncrement="true">
         <constraints primaryKey="true" nullable="false" />
+      </column>
+      <column name="timesheet_id" type="bigint">
+        <constraints nullable="false" />
       </column>
       <column name="holiday_name" type="varchar(50)" />
       <column name="date" type="timestamp with time zone" />

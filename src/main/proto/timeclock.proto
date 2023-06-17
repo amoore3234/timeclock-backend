@@ -89,13 +89,15 @@ message GetProjectsResponse {
 
 message HolidayResponse {
   int64 id = 1;
-  string holidayName = 2;
-  string date = 3;
+  TimesheetResponse timesheetId = 2;
+  string holidayName = 3;
+  string date = 4;
 }
 
 message CreateHoliday {
-  string holidayName = 1;
-  string date = 2;
+  TimesheetResponse timesheetId = 1;
+  string holidayName = 2;
+  string date = 3;
 }
 
 message GetHolidayById {
@@ -109,21 +111,19 @@ message UpdateHoliday {
 
 message TimesheetResponse {
   int64 id = 1;
-  HolidayResponse holidayId = 2;
-  google.protobuf.Timestamp clockIn = 3;
-  google.protobuf.Timestamp clockOut = 4;
-  google.protobuf.Timestamp lunch = 5;
-  int32 hoursWorked = 6;
-  int32 overtime = 7;
-}
-
-message CreateTimesheet {
-  HolidayResponse holidayId = 1;
   google.protobuf.Timestamp clockIn = 2;
   google.protobuf.Timestamp clockOut = 3;
   google.protobuf.Timestamp lunch = 4;
   int32 hoursWorked = 5;
   int32 overtime = 6;
+}
+
+message CreateTimesheet {
+  google.protobuf.Timestamp clockIn = 1;
+  google.protobuf.Timestamp clockOut = 2;
+  google.protobuf.Timestamp lunch = 3;
+  int32 hoursWorked = 4;
+  int32 overtime = 5;
 }
 
 message GetTimesheetById {
