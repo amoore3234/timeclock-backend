@@ -6,11 +6,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import java.time.OffsetDateTime;
+import java.sql.Timestamp;
 import java.util.Objects;
 
 /**
- * EmployeeTimesheet class modeled as an entity..
+ * EmployeeTimesheet class modeled as an entity.
  */
 @Entity
 @Table(name = "employee_timesheet")
@@ -28,7 +28,7 @@ public class EmployeeTimesheetEntity extends AbstractEntity {
 
   @Nullable
   @Column(name = "weekly_period_date")
-  private OffsetDateTime weeklyPeriodDate;
+  private Timestamp weeklyPeriodDate;
 
   @Nullable
   @Column(name = "weekly_hours_worked")
@@ -55,11 +55,11 @@ public class EmployeeTimesheetEntity extends AbstractEntity {
   }
 
   @Nullable
-  public OffsetDateTime getWeeklyPeriodDate() {
+  public Timestamp getWeeklyPeriodDate() {
     return weeklyPeriodDate;
   }
 
-  public void setWeeklyPeriodDate(@Nullable OffsetDateTime weeklyPeriodDate) {
+  public void setWeeklyPeriodDate(@Nullable Timestamp weeklyPeriodDate) {
     this.weeklyPeriodDate = weeklyPeriodDate;
   }
 

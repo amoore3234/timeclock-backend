@@ -1,21 +1,26 @@
 package io.admin.util;
 
 import io.admin.core.EmployeeDetailEntity;
+import io.admin.core.EmployeeTimesheetEntity;
 import io.admin.core.HolidayEntity;
 import io.admin.core.ProjectEntity;
 import io.admin.core.TimesheetEntity;
 import io.admin.core.UserLoginEntity;
 import io.admin.timesheet.CreateEmployeeDetail;
+import io.admin.timesheet.CreateEmployeeTimesheet;
 import io.admin.timesheet.CreateHoliday;
 import io.admin.timesheet.CreateProject;
 import io.admin.timesheet.CreateTimesheet;
 import io.admin.timesheet.CreateUser;
 import io.admin.timesheet.EmployeeDetailResponse;
+import io.admin.timesheet.EmployeeTimesheetResponse;
+import io.admin.timesheet.GetEmployeeTimesheetsResponse;
 import io.admin.timesheet.GetProjectsResponse;
 import io.admin.timesheet.HolidayResponse;
 import io.admin.timesheet.ProjectResponse;
 import io.admin.timesheet.TimesheetResponse;
 import io.admin.timesheet.UpdateEmployeeDetail;
+import io.admin.timesheet.UpdateEmployeeTimesheet;
 import io.admin.timesheet.UpdateHoliday;
 import io.admin.timesheet.UpdateProject;
 import io.admin.timesheet.UpdateTimesheet;
@@ -53,7 +58,7 @@ public class RequestBuilderUtil {
    * Creates a EmployeeDetail entity from a request.
    *
    * @param request {@link CreateEmployeeDetail} defines a request stub.
-   * @return returns a UserLogin object.
+   * @return returns a EmployeeDetail object.
    */
   public static EmployeeDetailEntity createEmployeeDetailRequest(CreateEmployeeDetail request) {
     final EmployeeDetailEntity employeeDetail = EmployeeDetailEntity.newInstance();
@@ -91,7 +96,7 @@ public class RequestBuilderUtil {
    * Creates a Holiday entity from a request.
    *
    * @param request {@link CreateHoliday} defines a request stub.
-   * @return returns a UserLogin object.
+   * @return returns a Holiday object.
    */
   public static HolidayEntity createHolidayRequest(CreateHoliday request) {
     final TimesheetEntity timesheetEntity = TimesheetEntity.newInstance();
@@ -122,6 +127,39 @@ public class RequestBuilderUtil {
   }
 
   /**
+   * Creates a EmployeeTimesheet entity from a request.
+   *
+   * @param request {@link CreateEmployeeTimesheet} defines a request stub.
+   * @return returns a EmployeeTimesheet object.
+   */
+  public static EmployeeTimesheetEntity createEmployeeTimesheetRequest(CreateEmployeeTimesheet request) {
+    final EmployeeTimesheetEntity employeeTimesheet = EmployeeTimesheetEntity.newInstance();
+    final EmployeeDetailEntity employeeDetail = EmployeeDetailEntity.newInstance();
+    final TimesheetEntity timesheet = TimesheetEntity.newInstance();
+    timesheet.setId(request.getTimesheetId().getId());
+    employeeDetail.setId(request.getEmployeeDetailId().getId());
+    employeeTimesheet.setEmployeeDetail(employeeDetail);
+    employeeTimesheet.setTimesheet(timesheet);
+    employeeTimesheet.setWeeklyPeriodDate(Timestamp.valueOf(request.getWeeklyPeriodDate()));
+    employeeTimesheet.setWeeklyHoursWorked(request.getWeeklyHoursWorked());
+    return employeeTimesheet;
+  }
+
+  /**
+   * Creates a EmployeeTimesheet entity from a request.
+   *
+   * @param request {@link UpdateEmployeeTimesheet} defines a request stub.
+   * @return returns a EmployeeTimesheet object.
+   */
+  public static EmployeeTimesheetEntity updateEmployeeTimesheetRequest(UpdateEmployeeTimesheet request,
+      EmployeeTimesheetEntity updateEmployeeTimesheet) {
+    updateEmployeeTimesheet.setId(request.getRequest().getEmployeeDetailId().getId());
+    updateEmployeeTimesheet.setWeeklyPeriodDate(Timestamp.valueOf(request.getRequest().getWeeklyPeriodDate()));
+    updateEmployeeTimesheet.setWeeklyHoursWorked(request.getRequest().getWeeklyHoursWorked());
+    return updateEmployeeTimesheet;
+  }
+
+  /**
    * Creates a Timesheet entity from a request.
    *
    * @param request {@link UpdateTimesheet} defines a request stub.
@@ -129,10 +167,10 @@ public class RequestBuilderUtil {
    */
   public static TimesheetEntity updateTimesheetRequest(UpdateTimesheet request,
       TimesheetEntity updateTimesheet) {
-    final TimesheetEntity timesheet = TimesheetEntity.newInstance();
+    updateTimesheet.setId(request.getId());
     updateTimesheet.setHoursWorked(request.getRequest().getHoursWorked());
     updateTimesheet.setOvertime(request.getRequest().getOvertime());
-    return timesheet;
+    return updateTimesheet;
   }
 
   /**
@@ -281,9 +319,9 @@ public class RequestBuilderUtil {
   /**
    * Creates a Project response.
    *
-   * @param project {@link ProjectEntity} defines a EmployeeDetail entity.
+   * @param project {@link ProjectEntity} defines a Project entity.
    * @param responseObserver {@link ProjectResponse} defines a StreamObserver response stub.
-   * @return returns a StreamObserver response for EmployeeDetail.
+   * @return returns a StreamObserver response for Project.
    */
   public static StreamObserver<ProjectResponse> projectResponse(
       ProjectEntity project, StreamObserver<ProjectResponse>
@@ -364,6 +402,50 @@ public class RequestBuilderUtil {
         .setOvertime(timesheet.getOvertime());
     TimesheetResponse timesheetResponse = timesheetResponseBuilder.build();
     responseObserver.onNext(timesheetResponse);
+    responseObserver.onCompleted();
+    return responseObserver;
+  }
+
+  /**
+   * Creates a EmployeeTimesheet response.
+   *
+   * @param employeeTimesheet {@link EmployeeTimesheetEntity} defines a EmployeeTimesheet entity.
+   * @param responseObserver {@link EmployeeTimesheetResponse} defines a StreamObserver response stub.
+   * @return returns a StreamObserver response for EmployeeTimesheet.
+   */
+  public static StreamObserver<EmployeeTimesheetResponse> employeeTimesheetResponse(
+      EmployeeTimesheetEntity employeeTimesheet, StreamObserver<EmployeeTimesheetResponse> responseObserver) {
+    io.admin.timesheet.EmployeeTimesheetResponse.Builder employeeTimesheetResponseBuilder =
+      EmployeeTimesheetResponse.newBuilder()
+        .setId(employeeTimesheet.getId())
+        .setWeeklyPeriodDate(employeeTimesheet.getWeeklyPeriodDate().toString())
+        .setWeeklyHoursWorked(employeeTimesheet.getWeeklyHoursWorked());
+    EmployeeTimesheetResponse employeeTimesheetResponse = employeeTimesheetResponseBuilder.build();
+    responseObserver.onNext(employeeTimesheetResponse);
+    responseObserver.onCompleted();
+    return responseObserver;
+  }
+
+  /**
+   * Creates a Project list response.
+   *
+   * @param employee {@link EmployeeDetailEntity} defines a EmployeeDetail entity.
+   * @param responseObserver {@link GetEmployeeTimesheetsResponse} defines a StreamObserver response stub.
+   * @return returns a StreamObserver response for a list of timesheets for an employee.
+   */
+  public static StreamObserver<GetEmployeeTimesheetsResponse> getEmployeeTimesheetsResponse(
+      EmployeeDetailEntity employee, StreamObserver<GetEmployeeTimesheetsResponse>
+      responseObserver) {
+    List<EmployeeTimesheetEntity> timesheets = employee.getEmployeeTimesheets();
+    List<io.admin.timesheet.EmployeeTimesheetResponse> employeeTimesheets = timesheets.stream()
+        .map(timesheet -> io.admin.timesheet.EmployeeTimesheetResponse.newBuilder()
+          .setId(timesheet.getId())
+          .setWeeklyPeriodDate(timesheet.getWeeklyPeriodDate().toString())
+          .setWeeklyHoursWorked(timesheet.getWeeklyHoursWorked()).build())
+          .collect(Collectors.toList());
+    GetEmployeeTimesheetsResponse employeeTimesheetsResponse = GetEmployeeTimesheetsResponse.newBuilder()
+        .addAllEmployeeTimesheets(employeeTimesheets).build();
+    responseObserver.onNext(employeeTimesheetsResponse);
     responseObserver.onCompleted();
     return responseObserver;
   }

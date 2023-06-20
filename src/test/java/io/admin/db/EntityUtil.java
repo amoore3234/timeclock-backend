@@ -59,11 +59,11 @@ class EntityUtil {
     final EmployeeTimesheetEntityRepository employeeTimesheetRepository =
         new EmployeeTimesheetEntityRepository(sessionFactory);
 
-    final OffsetDateTime now = OffsetDateTime.now();
+    final Timestamp timestamp = Timestamp.valueOf("2018-09-01 09:01:15");
     final EmployeeTimesheetEntity employeeTimesheetEntity = EmployeeTimesheetEntity.newInstance();
     employeeTimesheetEntity.setEmployeeDetail(employeeDetailTestEntity(sessionFactory));
     employeeTimesheetEntity.setTimesheet(timesheetTestEntity(sessionFactory));
-    employeeTimesheetEntity.setWeeklyPeriodDate(now);
+    employeeTimesheetEntity.setWeeklyPeriodDate(timestamp);
     employeeTimesheetEntity.setWeeklyHoursWorked(40);
     return employeeTimesheetRepository.save(employeeTimesheetEntity);
   }

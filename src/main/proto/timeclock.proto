@@ -48,7 +48,7 @@ message CreateEmployeeDetail {
   string endDate = 8;
 }
 
-message GetEmployeetDetailById {
+message GetEmployeeDetailById {
   int64 id = 1;
 }
 
@@ -139,14 +139,14 @@ message EmployeeTimesheetResponse {
   int64 id = 1;
   EmployeeDetailResponse employeeDetailId = 2;
   TimesheetResponse timesheetId = 3;
-  google.protobuf.Timestamp weeklyPeriodDate = 4;
+  string weeklyPeriodDate = 4;
   int32 weeklyHoursWorked = 5;
 }
 
-message EmployeeTimesheetRequest {
+message CreateEmployeeTimesheet {
   EmployeeDetailResponse employeeDetailId = 1;
   TimesheetResponse timesheetId = 2;
-  google.protobuf.Timestamp weeklyPeriodDate = 3;
+  string weeklyPeriodDate = 3;
   int32 weeklyHoursWorked = 4;
 }
 
@@ -155,10 +155,11 @@ message GetEmployeeTimesheetById {
 }
 
 message UpdateEmployeeTimesheet {
-  EmployeeTimesheetRequest request = 1;
+  int64 id = 1;
+  CreateEmployeeTimesheet request = 2;
 }
 
-message GetEmployeeTimesheets {
+message GetEmployeeTimesheetsResponse {
   repeated EmployeeTimesheetResponse employeeTimesheets = 1;
 }
 
@@ -177,10 +178,11 @@ service UserLoginService {
 service EmployeeDetailService {
   //CRUD methods for EmployeeDetail
   rpc createEmployeeDetail(CreateEmployeeDetail) returns (EmployeeDetailResponse);
-  rpc getEmployeeDetailById(GetEmployeetDetailById) returns (EmployeeDetailResponse);
+  rpc getEmployeeDetailById(GetEmployeeDetailById) returns (EmployeeDetailResponse);
   rpc updateEmployeeDetail(UpdateEmployeeDetail) returns (EmployeeDetailResponse);
-  rpc deleteEmployeeDetail(GetEmployeetDetailById) returns (EmployeeDetailResponse);
-  rpc getProjects(GetEmployeetDetailById) returns (GetProjectsResponse);
+  rpc deleteEmployeeDetail(GetEmployeeDetailById) returns (EmployeeDetailResponse);
+  rpc getProjects(GetEmployeeDetailById) returns (GetProjectsResponse);
+  rpc getEmployeeTimesheets(GetEmployeeDetailById) returns (GetEmployeeTimesheetsResponse);
 }
 
 service ProjectService {
@@ -209,9 +211,8 @@ service TimesheetService {
 
 service EmployeeTimesheetService {
   //CRUD methods for EmployeeTimesheet
-  rpc createEmployeeTimesheet(EmployeeTimesheetRequest) returns (EmployeeTimesheetResponse);
+  rpc createEmployeeTimesheet(CreateEmployeeTimesheet) returns (EmployeeTimesheetResponse);
   rpc getEmployeeTimesheetById(GetEmployeeTimesheetById) returns (EmployeeTimesheetResponse);
-  rpc updateEmployeeTimesheet(EmployeeTimesheetRequest) returns (EmployeeTimesheetResponse);
+  rpc updateEmployeeTimesheet(UpdateEmployeeTimesheet) returns (EmployeeTimesheetResponse);
   rpc deleteEmployeeTimesheet(GetEmployeeTimesheetById) returns (EmployeeTimesheetResponse);
-  rpc getEmployeeTimesheets(GetEmployeetDetailById) returns (GetEmployeeTimesheets);
 }

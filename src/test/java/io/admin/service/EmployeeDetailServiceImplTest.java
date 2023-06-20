@@ -3,6 +3,7 @@ package io.admin.service;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import io.admin.core.EmployeeDetailEntity;
+import io.admin.core.EmployeeTimesheetEntity;
 import io.admin.core.ProjectEntity;
 import io.admin.core.UserLoginEntity;
 import io.admin.db.EmployeeDetailEntityRepository;
@@ -249,5 +250,47 @@ class EmployeeDetailServiceImplTest {
     assertThat(response.getProjects().get(1).getProjectStatus()).isEqualTo(projectStatus);
     assertThat(response.getProjects().get(1).getStartDate()).isEqualTo(startDate);
     assertThat(response.getProjects().get(1).getEndDate()).isEqualTo(endDate);
+  }
+
+  @Test
+  void testGetTimesheets() {
+    final String date = "2020-07-01 19:10:25";
+    final Long id = 1L;
+    final Long employeeDetailId = 1L;
+    final Timestamp weeklyPeriodDate = Timestamp.valueOf(date);
+    final int weeklyHoursWorked = 40;
+
+    final List<EmployeeTimesheetEntity> timesheetList = new ArrayList<>();
+    final EmployeeTimesheetEntity mockEmployeeTimesheetEntity1 = Mockito.mock(EmployeeTimesheetEntity.class);
+    final EmployeeTimesheetEntity mockEmployeeTimesheetEntity2 = Mockito.mock(EmployeeTimesheetEntity.class);
+    final EmployeeDetailEntity mockEmployeeDetailEntity = Mockito.mock(EmployeeDetailEntity.class);
+
+    Mockito.when(mockEmployeeDetailEntity.getId()).thenReturn(employeeDetailId);
+
+    Mockito.when(mockEmployeeTimesheetEntity1.getWeeklyPeriodDate()).thenReturn(weeklyPeriodDate);
+    Mockito.when(mockEmployeeTimesheetEntity1.getWeeklyHoursWorked()).thenReturn(weeklyHoursWorked);
+    timesheetList.add(0, mockEmployeeTimesheetEntity1);
+
+    Mockito.when(mockEmployeeTimesheetEntity2.getWeeklyPeriodDate()).thenReturn(weeklyPeriodDate);
+    Mockito.when(mockEmployeeTimesheetEntity2.getWeeklyHoursWorked()).thenReturn(weeklyHoursWorked);
+    timesheetList.add(1, mockEmployeeTimesheetEntity2);
+
+    Mockito.when(mockEmployeeDetailEntity.getEmployeeTimesheets()).thenReturn(timesheetList);
+
+
+    Mockito.when(employeeDetailEntityRepository.save(Mockito.any(EmployeeDetailEntity.class)))
+        .thenReturn(mockEmployeeDetailEntity);
+    Mockito.when(employeeDetailEntityRepository.getById(Mockito.any(Long.class)))
+        .thenReturn(Optional.of(mockEmployeeDetailEntity));
+
+    final ArgumentCaptor<Long> idCaptor = ArgumentCaptor.forClass(Long.class);
+    EmployeeDetailEntity response = employeeDetailEntityRepository.getById(id).get();
+    Mockito.verify(employeeDetailEntityRepository).getById(idCaptor.capture());
+
+    assertThat(idCaptor.getValue()).isEqualTo(id);
+    assertThat(response.getEmployeeTimesheets().get(0).getWeeklyPeriodDate()).isEqualTo(weeklyPeriodDate);
+    assertThat(response.getEmployeeTimesheets().get(0).getWeeklyHoursWorked()).isEqualTo(weeklyHoursWorked);
+    assertThat(response.getEmployeeTimesheets().get(1).getWeeklyPeriodDate()).isEqualTo(weeklyPeriodDate);
+    assertThat(response.getEmployeeTimesheets().get(1).getWeeklyHoursWorked()).isEqualTo(weeklyHoursWorked);
   }
 }
